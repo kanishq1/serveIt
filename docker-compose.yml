@@ -1,0 +1,44 @@
+version: '3'
+
+# Define the services/containers to be run
+services:
+  csa-backend1: #name of your service
+    container_name: csa-backend1
+    build: ./ # specify the directory of the Dockerfile
+    #image: node:10.19.0
+    command: npm run start
+    ports:
+      - '4193:4193' #specify ports forwarding
+    networks:
+      - csa_app
+    links:
+      - database # link this service to the database service
+    volumes:
+      - nodemodules:/usr/src/app/node_modules
+      - .:/usr/src/app
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: postgres://postgres:eatsleepcode@database:5432/csa_app
+    working_dir: /usr/src/app
+
+  database: # name of the service
+    image: postgres:11.7 # specify image to build container from
+    container_name: db1
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: eatsleepcode
+      POSTGRES_DB: csa_app
+    networks:
+      - csa_app
+    volumes:
+      - psql:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+volumes:
+  nodemodules:
+  psql:
+
+networks:
+  csa_app:
