@@ -5,9 +5,8 @@
   "scripts": {
     "client-install": "cd client && npm install",
     "start": "node ./bin/www",
-    "client": "cd ../client && npm start",
     "server": "nodemon ./bin/www",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" ",
+    "dev": "npm run server",
     "linter": "eslint . --fix --ext .js --ext .jsx --ext .ts --ext .tsx"
   },
   "husky": {
