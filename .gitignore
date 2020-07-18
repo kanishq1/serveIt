@@ -2,5 +2,3 @@ node_modules/
 testing/
 config/creds/
 secret.yaml
-.env
-exam.json
