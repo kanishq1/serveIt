@@ -1,7 +1,7 @@
 var db = {
   staging: {
     DATABASE_HOST: 'ec2-18-235-109-97.compute-1.amazonaws.com',
-    DATABASE_NAME: 'dauook8sjrk2um',
+    DATABASE_NAME: 'serveit-backend',
     DATABASE_USERNAME: 'jbtrmjtpbhhdmf',
     DATABASE_PASSWORD: 'b84b664c54ebc97895031dfad836a61d24bf85a67ad74ad578ee5b11e49ff42b',
     DATABASE_PORT: 5432,
@@ -11,7 +11,7 @@ var db = {
   },
   prod: {
     DATABASE_HOST: 'ec2-18-235-109-97.compute-1.amazonaws.com',
-    DATABASE_NAME: 'dauook8sjrk2um',
+    DATABASE_NAME: 'serveit-backend',
     DATABASE_USERNAME:  'jbtrmjtpbhhdmf',
     DATABASE_PASSWORD:  'b84b664c54ebc97895031dfad836a61d24bf85a67ad74ad578ee5b11e49ff42b',
     DATABASE_PORT: 5432,
