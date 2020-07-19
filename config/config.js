@@ -1,19 +1,19 @@
 var db = {
   staging: {
-    DATABASE_HOST: '/cloudsql/generic-services:asia-south1:services-database',
-    DATABASE_NAME: 'services',
-    DATABASE_USERNAME: 'services',
-    DATABASE_PASSWORD: 'services',
+    DATABASE_HOST: 'ec2-18-235-109-97.compute-1.amazonaws.com',
+    DATABASE_NAME: 'dauook8sjrk2um',
+    DATABASE_USERNAME: 'jbtrmjtpbhhdmf',
+    DATABASE_PASSWORD: 'b84b664c54ebc97895031dfad836a61d24bf85a67ad74ad578ee5b11e49ff42b',
     DATABASE_PORT: 5432,
     DATABASE_DIALECT: 'postgres',
     NODE_ENV: process.env.NODE_ENV || 'staging',
     SCHEMA: 'public',
   },
   prod: {
-    DATABASE_HOST: process.env.DATABASE_HOST || '/cloudsql/generic-services:asia-south1:services-database',
-    DATABASE_NAME: process.env.DATABASE_NAME || 'services',
-    DATABASE_USERNAME: process.env.DATABASE_USERNAME || 'services',
-    DATABASE_PASSWORD: process.env.DATABASE_PASSWORD || 'services',
+    DATABASE_HOST: process.env.DATABASE_HOST || 'ec2-18-235-109-97.compute-1.amazonaws.com
+    DATABASE_NAME: process.env.DATABASE_NAME || 'dauook8sjrk2um',
+    DATABASE_USERNAME: process.env.DATABASE_USERNAME || 'jbtrmjtpbhhdmf',
+    DATABASE_PASSWORD: process.env.DATABASE_PASSWORD || 'b84b664c54ebc97895031dfad836a61d24bf85a67ad74ad578ee5b11e49ff42b',
     DATABASE_PORT: process.env.DATABASE_PORT || 5432,
     DATABASE_DIALECT: process.env.DATABASE_DIALECT || 'postgres',
     NODE_ENV: process.env.NODE_ENV || 'production',
