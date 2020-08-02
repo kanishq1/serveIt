@@ -4,11 +4,10 @@ var db = require('../models/db');
 
 module.exports.login = async function (req, res) {
   try {
-    const userEmail = req.body.email;
-    const userName = req.body.mobile;
+    const userId = req.body.id;
     let user = await db.public.login.findOne({
       where: {
-        email: userEmail,
+        firebase_id: userId,
       },
       attributes: ['id', 'email', 'created_at', 'new_user'],
     });
@@ -16,8 +15,7 @@ module.exports.login = async function (req, res) {
     if (!user) {
       // Create a new user
       var create_object = {
-        email: userEmail,
-        name: userName,
+        firebase_id: userId,
       };
 
       db.public.login
@@ -25,8 +23,7 @@ module.exports.login = async function (req, res) {
         .then((login_data) => {
           // The payload of the auth-token
           var auth_data = {
-            email: login_data.email,
-            id: login_data.id,
+            firebase_id: userId,
             created_at: login_data.created_at,
           };
           // Create and assign an auth-token
@@ -49,8 +46,7 @@ module.exports.login = async function (req, res) {
       // The user has already signed-in
       // The payload of the auth-token
       var auth_data = {
-        email: user.email,
-        id: user.id,
+        firebase_id: userId,
         created_at: user.created_at,
       };
       // Create and assign an auth-token

@@ -1,8 +1,8 @@
-var config = require('../../config/config');
+var config = require("../../config/config");
 
 module.exports = (sequelize, DataTypes) => {
   const login = sequelize.define(
-    'login',
+    "login",
     {
       id: {
         type: DataTypes.BIGINT,
@@ -10,9 +10,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
       },
+      firebase_id: { type: DataTypes.TEXT },
       org_id: { type: DataTypes.BIGINT },
-      role: { type: DataTypes.TEXT, defaultValue: 'user' },
-      account_type: { type: DataTypes.TEXT, defaultValue: 'standard_login_account' },
+      role: { type: DataTypes.TEXT, defaultValue: "user" },
+      account_type: {
+        type: DataTypes.TEXT,
+        defaultValue: "standard_login_account",
+      },
 
       first_name: { type: DataTypes.TEXT },
       middle_name: { type: DataTypes.TEXT },
@@ -50,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
       created_at: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+        defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
       },
       updated_at: DataTypes.DATE,
       deleted_at: DataTypes.DATE,
