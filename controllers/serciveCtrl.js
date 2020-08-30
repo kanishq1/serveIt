@@ -1,21 +1,19 @@
-var db = require("../models/db");
 var config = require("../config/config");
-// var utilities = require('../utilities/utilities');
+var db = require("../models/db");
 
-async function create(req, res) {
+async function addService(req, res) {
 	try {
-		//
-		// console.log('hey');
-		let create_obj = {
-			key: req.body.key,
-			value: req.body.value,
+		let id = req.body.firebase_id;
+		let service_obj = {
+			name: req.body.serviceName,
+			description: req.body.serviceDesc,
 		};
 
-		let kv_created = await db.public.kv.create(create_obj);
+		let service = await db.public.service.create(service_obj);
 
 		res.status(200).json({
 			success: true,
-			kv: kv_created,
+			service: service,
 		});
 	} catch (err) {
 		console.log(err);
@@ -29,9 +27,8 @@ async function create(req, res) {
 	}
 }
 
-async function get(req, res) {
+async function getAllServices(req, res) {
 	try {
-		//
 		let query = {};
 
 		if (req.query.key) {
