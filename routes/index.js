@@ -7,11 +7,13 @@ var login = require("../controllers/loginCtrl");
 var atc = require("../controllers/atc-strips-no-cache");
 var crud = require("../controllers/crud");
 const verify = require("../functions/verifyFunc");
+const sercives = require("../controllers/serciveCtrl");
 // // Login and onboarding
 // router.post('/register', login.register);
 router.post("/login", login.login);
 router.post("/update", verify.user, login.update);
 router.post("/updateLink", verify.user, login.updateLink);
+router.get("/services", verify.user, sercives.getAllServices);
 // // ATC and the ATC Strips
 // router.get('/atc/strips', atc.getAll);
 // router.get('/atc/progress/strip', atc.get);

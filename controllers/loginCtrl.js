@@ -74,6 +74,7 @@ module.exports.update = async function (req, res) {
 			first_name: req.body.first_name,
 			last_name: req.body.last_name,
 			address: req.body.address,
+			profile_pic: req.body.profile_pic,
 			new_user: false,
 		};
 		const user_updated = await db.public.login.update(user_obj, { where: { firebase_id: id }, returning: true });

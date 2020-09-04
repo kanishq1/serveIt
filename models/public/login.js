@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
 			 */
 			address: { type: DataTypes.JSONB },
 			links: { type: DataTypes.JSONB },
+			profile_pic: { type: DataTypes.TEXT },
 
 			// Verifications
 			email_verified: { type: DataTypes.DATE },
