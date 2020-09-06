@@ -3,8 +3,7 @@ var db = {
 		DATABASE_HOST: "ec2-3-215-83-17.compute-1.amazonaws.com",
 		DATABASE_NAME: "d71fhmjbsb4932",
 		DATABASE_USERNAME: "teworlnpybzxbp",
-		DATABASE_PASSWORD:
-			"9e6d2e9286d27d42631dac217ba2d2be31d336ee01f2c29a2a141afb2b64f55a",
+		DATABASE_PASSWORD: "9e6d2e9286d27d42631dac217ba2d2be31d336ee01f2c29a2a141afb2b64f55a",
 		DATABASE_PORT: 5432,
 		DATABASE_DIALECT: "postgres",
 		NODE_ENV: process.env.NODE_ENV || "staging",
@@ -14,8 +13,7 @@ var db = {
 		DATABASE_HOST: "ec2-18-235-109-97.compute-1.amazonaws.com",
 		DATABASE_NAME: "serveit-backend",
 		DATABASE_USERNAME: "jbtrmjtpbhhdmf",
-		DATABASE_PASSWORD:
-			"b84b664c54ebc97895031dfad836a61d24bf85a67ad74ad578ee5b11e49ff42b",
+		DATABASE_PASSWORD: "b84b664c54ebc97895031dfad836a61d24bf85a67ad74ad578ee5b11e49ff42b",
 		DATABASE_PORT: 5432,
 		DATABASE_DIALECT: "postgres",
 		NODE_ENV: "production",
@@ -48,8 +46,7 @@ var config = {
 		sessionKey: "SecretSessionKey",
 		port: process.env.PORT || "4192",
 		name: "generic Services API Platform",
-		local_domain:
-			"http://localhost:" + (process.env.PORT || "4192") + "/api/v1",
+		local_domain: "http://localhost:" + (process.env.PORT || "4192") + "/api/v1",
 	},
 
 	db: {
@@ -62,8 +59,7 @@ var config = {
 	},
 	cloud: {
 		gcp: {
-			service_account_path:
-				"./config/creds/firebase-admin-sdk-service-account.json",
+			service_account_path: "./config/creds/firebase-admin-sdk-service-account.json",
 			project_id: "generic-services",
 			storage: {
 				bucket_name: "generic-services.appspot.com",

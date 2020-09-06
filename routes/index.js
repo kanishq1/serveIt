@@ -13,6 +13,8 @@ const sercives = require("../controllers/serciveCtrl");
 router.post("/login", login.login);
 router.post("/update", verify.user, login.update);
 router.post("/updateLink", verify.user, login.updateLink);
+router.post("/verify", verify.user, login.verifyUser);
+router.get("/verify", verify.user, login.checkVerify);
 router.get("/services", verify.user, sercives.getAllServices);
 // // ATC and the ATC Strips
 // router.get('/atc/strips', atc.getAll);

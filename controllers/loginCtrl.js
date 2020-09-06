@@ -96,16 +96,57 @@ module.exports.update = async function (req, res) {
 module.exports.updateLink = async function (req, res) {
 	try {
 		let id = req.user.firebase_id;
-		let user_obj = {
-			first_name: req.body.first_name,
-			last_name: req.body.last_name,
-			address: req.body.address,
-			new_user: false,
+		let links_obj = {
+			links: req.body.links,
 		};
-		const user_updated = await db.public.login.update(user_obj, { where: { firebase_id: id }, returning: true });
+		const user_updated = await db.public.login.update(links_obj, { where: { firebase_id: id }, returning: true });
 		res.status(200).json({
 			success: true,
 			user: user_updated[1][0],
+		});
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			success: false,
+			error: {
+				message: "Internal Server Error",
+				description: err.description,
+			},
+		});
+	}
+};
+module.exports.verifyUser = async function (req, res) {
+	try {
+		let id = req.user.firebase_id;
+		let verify_obj = { verified: req.body.verified };
+		const user_updated = await db.public.login.update(verify_obj, { where: { firebase_id: id }, returning: true });
+		res.status(200).json({
+			success: true,
+			user: user_updated[1][0],
+		});
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			success: false,
+			error: {
+				message: "Internal Server Error",
+				description: err.description,
+			},
+		});
+	}
+};
+module.exports.checkVerify = async function (req, res) {
+	try {
+		let id = req.user.firebase_id;
+		let verified = await db.public.login.findOne({
+			where: {
+				firebase_id: id,
+			},
+			attributes: ["verified"],
+		});
+		res.status(200).json({
+			success: true,
+			data: verified.verified,
 		});
 	} catch (err) {
 		console.log(err);
