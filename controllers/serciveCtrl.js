@@ -29,14 +29,7 @@ module.exports.addService = async function (req, res) {
 
 module.exports.getAllServices = async function (req, res) {
 	try {
-		const services = [
-			{ id: "1", name: "service1", desc: "desc1" },
-			{ id: "2", name: "service2", desc: "desc2" },
-			{ id: "3", name: "service3", desc: "desc3" },
-			{ id: "4", name: "service4", desc: "desc4" },
-			{ id: "5", name: "service5", desc: "desc5" },
-			{ id: "6", name: "service6", desc: "desc6" },
-		];
+		let services = await db.public.services.findAll();
 		res.status(200).json({
 			success: true,
 			services: services,

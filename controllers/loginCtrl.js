@@ -9,7 +9,7 @@ module.exports.login = async function (req, res) {
 			where: {
 				firebase_id: userId,
 			},
-			attributes: ["id", "email", "created_at", "new_user"],
+			attributes: ["id", "email", "created_at", "new_user", "role", "verified"],
 		});
 		// console.log(user);
 		if (!user) {
@@ -23,6 +23,7 @@ module.exports.login = async function (req, res) {
 				.then((login_data) => {
 					// The payload of the auth-token
 					var auth_data = {
+						id: login_data.id,
 						firebase_id: userId,
 						created_at: login_data.created_at,
 					};
@@ -33,6 +34,8 @@ module.exports.login = async function (req, res) {
 						success: true,
 						authToken: token,
 						newUser: login_data.new_user, // newUser = true
+						role: login_data.role,
+						verified: login_data.verified.verified,
 					});
 				})
 				.catch((err) => {
@@ -46,6 +49,7 @@ module.exports.login = async function (req, res) {
 			// The user has already signed-in
 			// The payload of the auth-token
 			var auth_data = {
+				id: user.id,
 				firebase_id: userId,
 				created_at: user.created_at,
 			};
@@ -56,6 +60,8 @@ module.exports.login = async function (req, res) {
 				success: true,
 				authToken: token,
 				newUser: user.new_user,
+				role: user.role,
+				verified: user.verified.verified,
 			});
 		}
 	} catch (err) {
@@ -71,8 +77,7 @@ module.exports.update = async function (req, res) {
 	try {
 		let id = req.user.firebase_id;
 		let user_obj = {
-			first_name: req.body.first_name,
-			last_name: req.body.last_name,
+			name: req.body.name,
 			address: req.body.address,
 			profile_pic: req.body.profile_pic,
 			new_user: false,

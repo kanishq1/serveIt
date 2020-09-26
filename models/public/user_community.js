@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-	const service = sequelize.define(
-		"service",
+	const user_community = sequelize.define(
+		"user_community",
 		{
 			id: {
 				type: DataTypes.BIGINT,
@@ -8,8 +8,6 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 				autoIncrement: true,
 			},
-			name: { type: DataTypes.TEXT },
-			description: { type: DataTypes.TEXT },
 			created_at: {
 				type: DataTypes.DATE,
 				allowNull: false,
@@ -22,6 +20,5 @@ module.exports = (sequelize, DataTypes) => {
 			underscored: true,
 		}
 	);
-
-	return service;
+	return user_community;
 };

@@ -1,5 +1,3 @@
-var config = require("../../config/config");
-
 module.exports = (sequelize, DataTypes) => {
 	const login = sequelize.define(
 		"login",
@@ -11,9 +9,7 @@ module.exports = (sequelize, DataTypes) => {
 				autoIncrement: true,
 			},
 			firebase_id: { type: DataTypes.TEXT },
-			first_name: { type: DataTypes.TEXT },
-
-			last_name: { type: DataTypes.TEXT },
+			name: { type: DataTypes.TEXT },
 
 			email: { type: DataTypes.TEXT },
 			mobile: { type: DataTypes.TEXT },
@@ -24,15 +20,12 @@ module.exports = (sequelize, DataTypes) => {
 			},
 
 			sex: { type: DataTypes.INTEGER },
-			/**
-			 * 1: male
-			 * 2: female
-			 * 3: other
-			 */
+			role: { type: DataTypes.INTEGER, defaultValue: 0 },
+			// apartment owner : 1
+			// tenant : 0
 			address: { type: DataTypes.JSONB },
 			links: { type: DataTypes.JSONB },
 			profile_pic: { type: DataTypes.TEXT },
-
 			// Verifications
 			verified: {
 				type: DataTypes.JSONB,
@@ -43,7 +36,6 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			mobile_verified: { type: DataTypes.DATE },
 			app_verified: { type: DataTypes.DATE },
-
 			created_at: {
 				type: DataTypes.DATE,
 				allowNull: false,

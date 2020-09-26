@@ -55,7 +55,11 @@ db.Sequelize = DataTypes;
 
 //Models/tables
 db.login = require("./login.js")(sequelize, Sequelize);
-db.service = require("./service.js")(sequelize, Sequelize);
+db.services = require("./services.js")(sequelize, Sequelize);
+db.provider = require("./provider")(sequelize, Sequelize);
+db.request = require("./request")(sequelize, Sequelize);
+db.community = require("./community")(sequelize, Sequelize);
+db.user_community = require("./user_community")(sequelize, Sequelize);
 // db.permissions = require('./permissions.js')(sequelize, Sequelize);
 // db.policy = require('./policy.js')(sequelize, Sequelize);
 db.kv = require("./kvStore.js")(sequelize, Sequelize);

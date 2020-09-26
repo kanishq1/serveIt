@@ -8,14 +8,25 @@ var atc = require("../controllers/atc-strips-no-cache");
 var crud = require("../controllers/crud");
 const verify = require("../functions/verifyFunc");
 const sercives = require("../controllers/serciveCtrl");
+const request = require("../controllers/requestCtrl");
+const community = require("../controllers/communityCtrl");
 // // Login and onboarding
 // router.post('/register', login.register);
 router.post("/login", login.login);
 router.post("/update", verify.user, login.update);
 router.post("/updateLink", verify.user, login.updateLink);
 router.post("/verify", verify.user, login.verifyUser);
+router.post("/request", verify.user, request.requestService);
+router.post("/accept", verify.user, request.acceptService);
+router.get("/showServices", verify.user, request.showService);
+router.post("/cancelServiceReciever", verify.user, request.cancelServiceReciever);
+router.post("/cancelServiceProvider", verify.user, request.cancelServiceProvider);
+router.get("/showServiceProvider", verify.user, request.showServiceProvider);
+router.get("/showServiceReciever", verify.user, request.showServiceReciever);
 router.get("/verify", verify.user, login.checkVerify);
 router.get("/services", verify.user, sercives.getAllServices);
+router.post("/joinCommunity", verify.user, community.joinCommunity);
+router.post("/createCommunity", verify.user, community.addCommunity);
 // // ATC and the ATC Strips
 // router.get('/atc/strips', atc.getAll);
 // router.get('/atc/progress/strip', atc.get);
