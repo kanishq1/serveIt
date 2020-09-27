@@ -50,7 +50,7 @@ var config = {
 	},
 
 	db: {
-		env: db.prod, // This is where we set the environment of the db
+		env: db.staging, // This is where we set the environment of the db
 		cache: cache.rg,
 	},
 
