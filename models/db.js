@@ -30,10 +30,19 @@ db.public = require("./public/db");
 // db.public.login.hasOne(db.public.provider, { foreignKey: "login_id", onDelete: "CASCADE" });
 // db.public.services.hasMany(db.public.provider, { onDelete: "CASCADE" });
 // db.public.provider.belongsToMany(db.public.services, { onDelete: "CASCADE" });
-db.public.login.belongsToMany(db.public.services, { through: db.public.provider, onDelete: "CASCADE" });
-db.public.services.belongsToMany(db.public.login, { through: db.public.provider, onDelete: "CASCADE" });
+db.public.login.belongsToMany(db.public.services, {
+	through: db.public.provider,
+	foreignKey: "login_id",
+	onDelete: "CASCADE",
+});
+db.public.provider.belongsTo(db.public.login, { foreignKey: "login_id" });
+db.public.services.belongsToMany(db.public.login, {
+	through: db.public.provider,
+	foreignKey: "service_id",
+	onDelete: "CASCADE",
+});
 
-db.public.request.belongsTo(db.public.login, { foreignKey: "reciever_id", onDelete: "CASCADE" });
+db.public.request.belongsTo(db.public.login, { as: "reciever", foreignKey: "reciever_id", onDelete: "CASCADE" });
 db.public.login.hasMany(db.public.request, { foreignKey: "reciever_id", onDelete: "CASCADE" });
 
 db.public.request.belongsTo(db.public.provider, { foreignKey: "provider_id", onDelete: "CASCADE" });
@@ -42,7 +51,15 @@ db.public.provider.hasMany(db.public.request, { foreignKey: "provider_id", onDel
 db.public.request.belongsTo(db.public.services, { foreignKey: "service_id", onDelete: "CASCADE" });
 db.public.services.hasMany(db.public.request, { foreignKey: "service_id", onDelete: "CASCADE" });
 
-db.public.community.belongsToMany(db.public.login, { through: db.public.user_community, onDelete: "CASCADE" });
-db.public.login.belongsToMany(db.public.community, { through: db.public.user_community, onDelete: "CASCADE" });
+db.public.community.belongsToMany(db.public.login, {
+	through: db.public.user_community,
+	foreignKey: "community_id",
+	onDelete: "CASCADE",
+});
+db.public.login.belongsToMany(db.public.community, {
+	through: db.public.user_community,
+	foreignKey: "login_id",
+	onDelete: "CASCADE",
+});
 
 module.exports = db;

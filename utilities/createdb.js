@@ -7,7 +7,7 @@ async function public_force(testing) {
 	if (!testing) {
 		console.log("Public force executed");
 	}
-	var user, service, permission_insert, community, provider;
+	var user, service, user_community, community, provider;
 
 	community = await db.public.community.create({
 		name: "abc",
@@ -24,7 +24,11 @@ async function public_force(testing) {
 		verified: {
 			verified: true,
 		},
+		new_user: false,
 	});
+	// user_community = await db.public.user_community({
+
+	// })
 	service = await db.public.services.create({
 		name: "abc",
 		description: "hello world",
@@ -35,7 +39,7 @@ async function public_force(testing) {
 		description: "hello world",
 	});
 	provider = await db.public.provider.create({
-		login_firebase_id: 1,
+		login_id: 1,
 		service_id: 1,
 	});
 	//   var permission_insert = await db.public.permissions.create({

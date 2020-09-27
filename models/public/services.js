@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			description: { type: DataTypes.TEXT },
 			questions: { type: DataTypes.JSONB },
+			price: { type: DataTypes.TEXT },
 			created_at: {
 				type: DataTypes.DATE,
 				allowNull: false,

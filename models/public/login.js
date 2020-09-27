@@ -4,11 +4,11 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			id: {
 				type: DataTypes.BIGINT,
-				primaryKey: true,
+
 				allowNull: false,
 				autoIncrement: true,
 			},
-			firebase_id: { type: DataTypes.TEXT },
+			firebase_id: { type: DataTypes.TEXT, primaryKey: true },
 			name: { type: DataTypes.TEXT },
 
 			email: { type: DataTypes.TEXT },

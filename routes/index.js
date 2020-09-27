@@ -25,6 +25,7 @@ router.get("/showServiceProvider", verify.user, request.showServiceProvider);
 router.get("/showServiceReciever", verify.user, request.showServiceReciever);
 router.get("/verify", verify.user, login.checkVerify);
 router.get("/services", verify.user, sercives.getAllServices);
+router.post("/joinServices", verify.user, sercives.joinServices);
 router.post("/joinCommunity", verify.user, community.joinCommunity);
 router.post("/createCommunity", verify.user, community.addCommunity);
 // // ATC and the ATC Strips

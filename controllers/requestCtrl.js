@@ -133,7 +133,17 @@ module.exports.cancelServiceProvider = async function (req, res) {
 
 module.exports.showService = async function (req, res) {
 	try {
-		let request = await db.public.request.findAll({ include: db.public.provider });
+		let request = await db.public.request.findAll({
+			include: [
+				{
+					model: db.public.provider,
+					attributes: ["id", "login_id"],
+					include: { model: db.public.login, attributes: ["name", "profile_pic"] },
+				},
+				{ model: db.public.login, as: "reciever", attributes: ["id", "name", "profile_pic"] },
+			],
+			attributes: ["id", "answers", "completed_at", "created_at", "rate", "status"],
+		});
 
 		res.status(200).json({
 			success: true,
@@ -153,7 +163,11 @@ module.exports.showService = async function (req, res) {
 module.exports.showServiceProvider = async function (req, res) {
 	try {
 		let provider_id = req.user.firebase_id;
-		let request = await db.public.request.findAll({ where: { provider_id: provider_id } });
+		let request = await db.public.request.findAll({
+			include: { model: db.public.login, as: "reciever", attributes: ["id", "name", "profile_pic"] },
+			where: { provider_id: provider_id },
+			attributes: ["id", "answers", "completed_at", "created_at", "rate", "status", "provider_id"],
+		});
 
 		res.status(200).json({
 			success: true,
@@ -173,7 +187,17 @@ module.exports.showServiceProvider = async function (req, res) {
 module.exports.showServiceReciever = async function (req, res) {
 	try {
 		let reciever_id = req.user.firebase_id;
-		let request = await db.public.request.findAll({ where: { reciever_id: reciever_id } });
+		let request = await db.public.request.findAll({
+			include: [
+				{
+					model: db.public.provider,
+					attributes: ["id", "login_id"],
+					include: { model: db.public.login, attributes: ["name", "profile_pic"] },
+				},
+			],
+			where: { reciever_id: reciever_id },
+			attributes: ["id", "answers", "completed_at", "created_at", "rate", "status", "reciever_id"],
+		});
 
 		res.status(200).json({
 			success: true,
