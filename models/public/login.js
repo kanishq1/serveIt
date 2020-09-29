@@ -4,11 +4,11 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			id: {
 				type: DataTypes.BIGINT,
-
+				primaryKey: true,
 				allowNull: false,
 				autoIncrement: true,
 			},
-			firebase_id: { type: DataTypes.TEXT, primaryKey: true },
+			firebase_id: { type: DataTypes.TEXT },
 			name: { type: DataTypes.TEXT },
 
 			email: { type: DataTypes.TEXT },
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
 			// apartment owner : 1
 			// tenant : 0
 			address: { type: DataTypes.JSONB },
-			links: { type: DataTypes.JSONB },
+			// links: { type: DataTypes.JSONB },
 			profile_pic: { type: DataTypes.TEXT },
 			// Verifications
 			verified: {

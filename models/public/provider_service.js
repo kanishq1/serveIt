@@ -8,6 +8,9 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 				autoIncrement: true,
 			},
+			status: { type: DataTypes.INTEGER },
+			docs: { type: DataTypes.JSONB },
+			// status : 0 - applied, 1-verified, 2-rejected
 			// login_id: { type: DataTypes.BIGINT },
 			// service_id: { type: DataTypes.BIGINT },
 			created_at: {

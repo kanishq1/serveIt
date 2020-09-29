@@ -32,13 +32,16 @@ async function public_force(testing) {
 	service = await db.public.services.create({
 		name: "abc",
 		description: "hello world",
-		questions: { 1: "q1", 2: "q2" },
+		questions: [
+			{ id: 1, question: "abc" },
+			{ id: 2, question: "qrt" },
+		],
 	});
 	service = await db.public.services.create({
 		name: "abc",
 		description: "hello world",
 	});
-	provider = await db.public.provider.create({
+	provider = await db.public.provider_service.create({
 		login_id: 1,
 		service_id: 1,
 	});

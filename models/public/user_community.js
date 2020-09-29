@@ -8,6 +8,8 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 				autoIncrement: true,
 			},
+			status: { type: DataTypes.INTEGER },
+			//status : 0 - applied, 1 - accepted, 2-rejected
 			created_at: {
 				type: DataTypes.DATE,
 				allowNull: false,

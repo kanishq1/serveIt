@@ -9,13 +9,16 @@ module.exports = (sequelize, DataTypes) => {
 				autoIncrement: true,
 			},
 			// reciever_id: { type: DataTypes.BIGINT },
-			// provider_id: { type: DataTypes.BIGINT },
+			provider_id: { type: DataTypes.BIGINT },
 			// service_id: { type: DataTypes.BIGINT },
 			time: { type: DataTypes.DATE },
 			unit: { type: DataTypes.TEXT },
 			answers: { type: DataTypes.JSONB },
-			status: { type: DataTypes.TEXT },
+			status: { type: DataTypes.INTEGER },
+			// 0 - requestd, 1 - accepeted, 2 - not accepted by any one, 3 - in progress, 4 - completed, 5- left in between, -1 : cancelled by reciever
 			rate: { type: DataTypes.TEXT },
+			reciver_community: { type: DataTypes.BIGINT },
+			provider_community: { type: DataTypes.BIGINT },
 			created_at: {
 				type: DataTypes.DATE,
 				allowNull: false,

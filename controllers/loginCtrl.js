@@ -23,7 +23,7 @@ module.exports.login = async function (req, res) {
 				.then((login_data) => {
 					// The payload of the auth-token
 					var auth_data = {
-						id: login_data.id,
+						login_id: login_data.id,
 						firebase_id: userId,
 						created_at: login_data.created_at,
 					};
@@ -49,7 +49,7 @@ module.exports.login = async function (req, res) {
 			// The user has already signed-in
 			// The payload of the auth-token
 			var auth_data = {
-				id: user.id,
+				login_id: user.id,
 				firebase_id: userId,
 				created_at: user.created_at,
 			};
@@ -72,7 +72,6 @@ module.exports.login = async function (req, res) {
 		});
 	}
 };
-
 module.exports.update = async function (req, res) {
 	try {
 		let id = req.user.firebase_id;

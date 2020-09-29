@@ -16,6 +16,8 @@ router.post("/login", login.login);
 router.post("/update", verify.user, login.update);
 router.post("/updateLink", verify.user, login.updateLink);
 router.post("/verify", verify.user, login.verifyUser);
+router.get("/verify", verify.user, login.checkVerify);
+
 router.post("/request", verify.user, request.requestService);
 router.post("/accept", verify.user, request.acceptService);
 router.get("/showServices", verify.user, request.showService);
@@ -23,9 +25,14 @@ router.post("/cancelServiceReciever", verify.user, request.cancelServiceReciever
 router.post("/cancelServiceProvider", verify.user, request.cancelServiceProvider);
 router.get("/showServiceProvider", verify.user, request.showServiceProvider);
 router.get("/showServiceReciever", verify.user, request.showServiceReciever);
-router.get("/verify", verify.user, login.checkVerify);
+router.post("/updateStatus", verify.user, request.updateStatus);
+router.post("/find", request.findDistance);
+
+router.post("/addService", verify.user, sercives.addService);
 router.get("/services", verify.user, sercives.getAllServices);
-router.post("/joinServices", verify.user, sercives.joinServices);
+router.post("/joinServices", verify.user, sercives.applyService);
+router.post("/verifyProvider", verify.user, sercives.acceptProviderService);
+
 router.post("/joinCommunity", verify.user, community.joinCommunity);
 router.post("/createCommunity", verify.user, community.addCommunity);
 // // ATC and the ATC Strips
