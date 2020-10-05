@@ -50,8 +50,8 @@ var config = {
 	},
 
 	db: {
-		env: db.rg, // This is where we set the environment of the db
-		cache: cache.staging,
+		env: db.staging, // This is where we set the environment of the db
+		cache: cache.rg,
 	},
 
 	apiKeys: {
