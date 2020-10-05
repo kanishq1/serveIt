@@ -25,6 +25,7 @@ router.post("/cancelServiceReciever", verify.user, request.cancelServiceReciever
 router.post("/cancelServiceProvider", verify.user, request.cancelServiceProvider);
 router.get("/showServiceProvider", verify.user, request.showServiceProvider);
 router.get("/showServiceReciever", verify.user, request.showServiceReciever);
+router.get("/availableNow", verify.user, request.servicesAvailabeNow);
 router.post("/updateStatus", verify.user, request.updateStatus);
 router.post("/find", request.findDistance);
 

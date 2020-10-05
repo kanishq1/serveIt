@@ -185,7 +185,10 @@ module.exports.showServiceProvider = async function (req, res) {
 	try {
 		let provider_id = req.user.login_id;
 		let request = await db.public.request.findAll({
-			include: { model: db.public.login, as: "reciever", attributes: ["id", "name", "profile_pic"] },
+			include: [
+				{ model: db.public.login, as: "reciever", attributes: ["id", "name", "profile_pic"] },
+				{ model: db.public.services },
+			],
 			where: { provider_id: provider_id },
 			attributes: [
 				"id",
@@ -227,6 +230,7 @@ module.exports.showServiceReciever = async function (req, res) {
 					attributes: ["id", "login_id"],
 					include: { model: db.public.login, attributes: ["name", "profile_pic"] },
 				},
+				{ model: db.public.services },
 			],
 			where: { reciever_id: reciever_id },
 			attributes: [
@@ -306,6 +310,34 @@ module.exports.findDistance = async function (req, res) {
 
 		res.status(200).json({
 			success: true,
+		});
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			success: false,
+			error: {
+				message: "Internal Server Error",
+				description: err.description,
+			},
+		});
+	}
+};
+module.exports.servicesAvailabeNow = async function (req, res) {
+	try {
+		let provider_id = req.user.login_id;
+		let provider_community = await db.public.user_community.findOne({ where: { login_id: provider_id } });
+		let available = await db.public.request.findAll({
+			include: [
+				{ model: db.public.login, as: "reciever", attributes: ["id", "name", "profile_pic"] },
+				{ model: db.public.services, attributes: ["id", "name", "description", "questions"] },
+			],
+			where: { reciver_community: provider_community.community_id },
+			attributes: ["id", "answers", "created_at", "rate", "status", "time", "reciever_id", "reciver_community"],
+		});
+
+		res.status(200).json({
+			success: true,
+			available,
 		});
 	} catch (err) {
 		console.log(err);

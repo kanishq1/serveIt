@@ -45,16 +45,6 @@ async function public_force(testing) {
 		login_id: 1,
 		service_id: 1,
 	});
-	//   var permission_insert = await db.public.permissions.create({
-	//     entity_name: '*',
-	//     entity_id: 0,
-	//     status: new Date(),
-	//     role: '*',
-	//     login_id: user.id,
-	//   });
-
-	//   users.push(user.id);
-
 	user = await db.public.login.create({
 		first_name: "Foo",
 		middle_name: "Testing",

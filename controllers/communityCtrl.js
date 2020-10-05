@@ -30,6 +30,13 @@ module.exports.joinCommunity = async function (req, res) {
 	try {
 		let id = req.user.login_id;
 		let community_id = req.body.community_id;
+		let user = await db.public.user_community.findOne({ where: { login_id: id } });
+		if (user) {
+			return res.status(200).json({
+				success: true,
+				msg: "user already joined a community",
+			});
+		}
 		let docs = req.body.docs;
 		const user_joined = await db.public.user_community.create({
 			login_id: id,
@@ -37,7 +44,7 @@ module.exports.joinCommunity = async function (req, res) {
 			docs: docs,
 			status: 0,
 		});
-		res.status(200).json({
+		return res.status(200).json({
 			success: true,
 			user: user_joined,
 		});
@@ -125,7 +132,7 @@ module.exports.showCommunities = async function (req, res) {
 	try {
 		// let id = req.body.firebase_id;
 
-		let communities = await db.public.community.finadAll({});
+		let communities = await db.public.community.findAll({});
 
 		res.status(200).json({
 			success: true,
@@ -145,7 +152,7 @@ module.exports.showCommunities = async function (req, res) {
 module.exports.showCommunitiesUser = async function (req, res) {
 	try {
 		let id = req.user.login_id;
-		let communities = await db.public.community.finadAll({ where: { login_id: id } });
+		let communities = await db.public.community.findAll({ where: { login_id: id } });
 		res.status(200).json({
 			success: true,
 			communities,

@@ -74,14 +74,14 @@ module.exports.login = async function (req, res) {
 };
 module.exports.update = async function (req, res) {
 	try {
-		let id = req.user.firebase_id;
+		let id = req.user.login_id;
 		let user_obj = {
 			name: req.body.name,
 			address: req.body.address,
 			profile_pic: req.body.profile_pic,
 			new_user: false,
 		};
-		const user_updated = await db.public.login.update(user_obj, { where: { firebase_id: id }, returning: true });
+		const user_updated = await db.public.login.update(user_obj, { where: { login_id: id }, returning: true });
 		res.status(200).json({
 			success: true,
 			user: user_updated[1][0],
