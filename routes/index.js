@@ -32,6 +32,7 @@ router.post("/payment", request.payment);
 
 router.post("/addService", verify.user, sercives.addService);
 router.get("/services", verify.user, sercives.getAllServices);
+router.get("/providerServices", verify.user, sercives.getAllServicesProvider);
 router.post("/joinServices", verify.user, sercives.applyService);
 router.post("/verifyProvider", verify.user, sercives.acceptProviderService);
 

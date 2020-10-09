@@ -29,7 +29,10 @@ module.exports.addService = async function (req, res) {
 module.exports.getAllServicesProvider = async function (req, res) {
 	try {
 		let id = req.user.login_id;
-		let services = await db.public.services.findAll({ where: { logn_id: id } });
+		let services = await db.public.provider_service.findAll({
+			where: { login_id: id },
+			attributes: ["id", "service_id", "docs", "status"],
+		});
 		res.status(200).json({
 			success: true,
 			services: services,
