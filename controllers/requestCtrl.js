@@ -1,6 +1,8 @@
 var db = require("../models/db");
 const geolib = require("geolib");
-
+const stripe = require("stripe")(
+	"sk_test_51HWYZGEaJxDKrnTlrIyFbt2eKBjUuhgj8HoV0sm1izOKZnDLeggS1DGaCN97L3gKIpxTmouLRCVBdROeugpBrr9z00SLkgl8PF"
+);
 module.exports.requestService = async function (req, res) {
 	try {
 		let reciver_community = await db.public.user_community.findOne({ where: { login_id: req.user.login_id } });
@@ -223,6 +225,7 @@ module.exports.showServiceProvider = async function (req, res) {
 module.exports.showServiceReciever = async function (req, res) {
 	try {
 		let reciever_id = req.user.login_id;
+		console.log(reciever_id);
 		let request = await db.public.request.findAll({
 			include: [
 				{
@@ -267,18 +270,7 @@ module.exports.updateStatus = async function (req, res) {
 	try {
 		let id = req.body.request_id;
 		let status = req.body.status;
-		// let reciever_id = req.user.login_id;
-		// let is_user_true = await db.public.request.findOne({
-		// 	where: { reciever_id: reciever_id, id: id },
-		// });
-		// if (!is_user_true) {
-		// 	return res.status(200).json({
-		// 		success: true,
-		// 		msg: "You are not the user",
-		// 	});
-		// }
 		let status_update = await db.public.request.update({ status: status }, { where: { id: id } });
-
 		res.status(200).json({
 			success: true,
 			msg: status_update[1][0],
@@ -331,13 +323,45 @@ module.exports.servicesAvailabeNow = async function (req, res) {
 				{ model: db.public.login, as: "reciever", attributes: ["id", "name", "profile_pic"] },
 				{ model: db.public.services, attributes: ["id", "name", "description", "questions"] },
 			],
-			where: { reciver_community: provider_community.community_id },
+			where: { reciver_community: provider_community.community_id, provider_id: null },
 			attributes: ["id", "answers", "created_at", "rate", "status", "time", "reciever_id", "reciver_community"],
 		});
 
 		res.status(200).json({
 			success: true,
 			available,
+		});
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			success: false,
+			error: {
+				message: "Internal Server Error",
+				description: err.description,
+			},
+		});
+	}
+};
+module.exports.payment = async function (req, res) {
+	try {
+		stripe.customers
+			.create({
+				name: req.body.name,
+				email: req.body.email,
+				source: "tok_visa",
+				description: "hey",
+			})
+			.then((customer) =>
+				stripe.charges.create({
+					amount: req.body.amount * 100,
+					currency: "inr",
+					customer: customer.id,
+				})
+			)
+			.then((charge) => console.log(charge))
+			.catch((err) => console.log(err));
+		res.status(200).json({
+			success: true,
 		});
 	} catch (err) {
 		console.log(err);

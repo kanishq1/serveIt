@@ -5,64 +5,153 @@ var db = require("../models/db");
 module.exports.login = async function (req, res) {
 	try {
 		const userId = req.body.id;
-		let user = await db.public.login.findOne({
+		const community_id = req.body.community_id;
+		let user;
+		let communities = await db.public.login.findAll({
+			include: {
+				model: db.public.community,
+				attributes: ["id", "name", "description", "address"],
+			},
 			where: {
 				firebase_id: userId,
 			},
-			attributes: ["id", "email", "created_at", "new_user", "role", "verified"],
+			attributes: ["id"],
 		});
-		// console.log(user);
-		if (!user) {
-			// Create a new user
-			var create_object = {
-				firebase_id: userId,
-			};
+		let structured_communities;
 
-			db.public.login
-				.create(create_object)
-				.then((login_data) => {
-					// The payload of the auth-token
-					var auth_data = {
-						login_id: login_data.id,
-						firebase_id: userId,
-						created_at: login_data.created_at,
-					};
-					// Create and assign an auth-token
-					const TOKEN_SECRET = config.app.jwtKey;
-					var token = jwt.sign(auth_data, TOKEN_SECRET);
-					return res.status(200).json({
-						success: true,
-						authToken: token,
-						newUser: login_data.new_user, // newUser = true
-						role: login_data.role,
-						verified: login_data.verified.verified,
-					});
-				})
-				.catch((err) => {
-					console.log(err);
-					return res.status(500).json({
-						success: false,
-						msg: "Internal server error",
-					});
+		if (communities[0] && communities[0].communities[0]) {
+			structured_communities = communities.map((i, k) => {
+				return Object.assign(
+					{},
+					{
+						login_id: i.id,
+						community_id: i.communities[0].id,
+						community_name: i.communities[0].name,
+						community_description: i.communities[0].description,
+						community_address: i.communities[0].address,
+						status: i.communities[0].user_community.status,
+					}
+				);
+			});
+		} else {
+			structured_communities = null;
+		}
+
+		if (community_id) {
+			user = await db.public.login.findOne({
+				include: {
+					model: db.public.community,
+					attributes: ["id", "name", "description", "address"],
+					where: { id: community_id },
+				},
+				where: {
+					firebase_id: userId,
+				},
+				attributes: ["id", "email", "created_at", "new_user", "role", "community_verified"],
+			});
+			if (!user) {
+				return res.status(200).json({
+					success: true,
+					msg: "user with this community and id not found",
 				});
-		} else if (user) {
-			// The user has already signed-in
-			// The payload of the auth-token
+			}
+			// Create and assign an auth-token
 			var auth_data = {
 				login_id: user.id,
 				firebase_id: userId,
 				created_at: user.created_at,
 			};
-			// Create and assign an auth-token
 			const TOKEN_SECRET = config.app.jwtKey;
 			var token = jwt.sign(auth_data, TOKEN_SECRET);
+			let default_community = user.communities.length
+				? {
+						community_id: user.communities[0].id,
+						community_name: user.communities[0].name,
+						community_description: user.communities[0].description,
+						community_address: user.communities[0].address,
+						status: user.communities[0].user_community.status,
+				  }
+				: null;
 			return res.status(200).json({
 				success: true,
 				authToken: token,
 				newUser: user.new_user,
 				role: user.role,
-				verified: user.verified.verified,
+				verified: user.community_verified,
+				communities: structured_communities,
+				default_community,
 			});
+		} else {
+			user = await db.public.login.findOne({
+				include: {
+					model: db.public.community,
+					attributes: ["id", "name", "description", "address"],
+				},
+				where: {
+					firebase_id: userId,
+				},
+				attributes: ["id", "email", "created_at", "new_user", "role", "community_verified"],
+			});
+			if (!user) {
+				// Create a new user
+				var create_object = {
+					firebase_id: userId,
+				};
+				db.public.login
+					.create(create_object)
+					.then((login_data) => {
+						// The payload of the auth-token
+						var auth_data = {
+							login_id: login_data.id,
+							firebase_id: userId,
+							created_at: login_data.created_at,
+						};
+						// Create and assign an auth-token
+						const TOKEN_SECRET = config.app.jwtKey;
+						var token = jwt.sign(auth_data, TOKEN_SECRET);
+						return res.status(200).json({
+							success: true,
+							authToken: token,
+							newUser: login_data.new_user, // newUser = true
+							role: login_data.role,
+							verified: login_data.community_verified,
+							community: null,
+						});
+					})
+					.catch((err) => {
+						console.log(err);
+						return res.status(500).json({
+							success: false,
+							msg: "Internal server error",
+						});
+					});
+			} else if (user) {
+				let auth_data = {
+					login_id: user.id,
+					firebase_id: userId,
+					created_at: user.created_at,
+				};
+				const TOKEN_SECRET = config.app.jwtKey;
+				let token = jwt.sign(auth_data, TOKEN_SECRET);
+				let default_community = user.communities.length
+					? {
+							community_id: user.communities[0].id,
+							community_name: user.communities[0].name,
+							community_description: user.communities[0].description,
+							community_address: user.communities[0].address,
+							status: user.communities[0].user_community.status,
+					  }
+					: null;
+				return res.status(200).json({
+					success: true,
+					authToken: token,
+					newUser: user.new_user,
+					role: user.role,
+					verified: user.community_verified,
+					communities: structured_communities,
+					default_community,
+				});
+			}
 		}
 	} catch (err) {
 		console.log(err);
@@ -80,8 +169,10 @@ module.exports.update = async function (req, res) {
 			address: req.body.address,
 			profile_pic: req.body.profile_pic,
 			new_user: false,
+			mobile: req.body.mobile,
+			email: req.body.email,
 		};
-		const user_updated = await db.public.login.update(user_obj, { where: { login_id: id }, returning: true });
+		const user_updated = await db.public.login.update(user_obj, { where: { id: id }, returning: true });
 		res.status(200).json({
 			success: true,
 			user: user_updated[1][0],

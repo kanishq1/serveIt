@@ -27,12 +27,9 @@ module.exports = (sequelize, DataTypes) => {
 			// links: { type: DataTypes.JSONB },
 			profile_pic: { type: DataTypes.TEXT },
 			// Verifications
-			verified: {
-				type: DataTypes.JSONB,
-				defaultValue: {
-					verified: false,
-					verified_date: null,
-				},
+			community_verified: {
+				type: DataTypes.INTEGER,
+				defaultValue: -1,
 			},
 			mobile_verified: { type: DataTypes.DATE },
 			app_verified: { type: DataTypes.DATE },
