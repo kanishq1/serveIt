@@ -16,7 +16,7 @@ router.post("/login", login.login);
 router.post("/update", verify.user, login.update);
 router.post("/updateLink", verify.user, login.updateLink);
 router.post("/verify", verify.user, login.verifyUser);
-router.get("/verify", verify.user, login.checkVerify);
+router.get("/profile", verify.user, login.profile);
 
 router.post("/request", verify.user, request.requestService);
 router.post("/accept", verify.user, request.acceptService);

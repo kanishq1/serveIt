@@ -254,3 +254,20 @@ module.exports.checkVerify = async function (req, res) {
 		});
 	}
 };
+
+module.exports.profile = async function (req, res) {
+	try {
+		const id = req.user.login_id;
+		let user = await db.public.login.findOne({ where: { id: id } });
+		res.status(200).json({
+			success: true,
+			user,
+		});
+	} catch (err) {
+		console.log(err);
+		return res.status(500).json({
+			success: false,
+			error: "Internal server error.",
+		});
+	}
+};

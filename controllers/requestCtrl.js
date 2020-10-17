@@ -152,6 +152,7 @@ module.exports.showService = async function (req, res) {
 					include: { model: db.public.login, attributes: ["name", "profile_pic"] },
 				},
 				{ model: db.public.login, as: "reciever", attributes: ["id", "name", "profile_pic"] },
+				{ model: db.public.services },
 			],
 			attributes: [
 				"id",
