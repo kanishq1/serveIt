@@ -41,7 +41,7 @@ db.public.services.belongsToMany(db.public.login, {
 	foreignKey: "service_id",
 	onDelete: "CASCADE",
 });
-
+db.public.provider_service.belongsTo(db.public.services);
 db.public.request.belongsTo(db.public.login, { as: "reciever", foreignKey: "reciever_id", onDelete: "CASCADE" });
 db.public.login.hasMany(db.public.request, { foreignKey: "reciever_id", onDelete: "CASCADE" });
 

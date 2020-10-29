@@ -10,6 +10,7 @@ const verify = require("../functions/verifyFunc");
 const sercives = require("../controllers/serciveCtrl");
 const request = require("../controllers/requestCtrl");
 const community = require("../controllers/communityCtrl");
+const order = require("../controllers/external");
 // // Login and onboarding
 // router.post('/register', login.register);
 router.post("/login", login.login);
@@ -26,7 +27,7 @@ router.post("/cancelServiceProvider", verify.user, request.cancelServiceProvider
 router.get("/showServiceProvider", verify.user, request.showServiceProvider);
 router.get("/showServiceReciever", verify.user, request.showServiceReciever);
 router.get("/availableNow", verify.user, request.servicesAvailabeNow);
-router.post("/updateStatus", verify.user, request.updateStatus);
+router.post("/updateStatusRequest", verify.user, request.updateStatus);
 router.post("/find", request.findDistance);
 router.post("/payment", request.payment);
 
@@ -49,6 +50,8 @@ router.get("/showCommunities", verify.user, community.showCommunities);
 // router.post("/grant/permission", login.allotPermission);
 // router.get("/get/user/team", login.getUserTeams);
 // router.get('/search/user', login.userFullTs);
+router.post("/order", order.orderProduct);
+router.get("/order", order.getProducts);
 
 router.post("/create/kv", verify.user, crud.create);
 router.get("/get/kv", crud.get);

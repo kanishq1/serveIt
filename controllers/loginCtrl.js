@@ -254,7 +254,6 @@ module.exports.checkVerify = async function (req, res) {
 		});
 	}
 };
-
 module.exports.profile = async function (req, res) {
 	try {
 		const id = req.user.login_id;

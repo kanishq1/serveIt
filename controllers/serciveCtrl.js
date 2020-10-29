@@ -31,6 +31,7 @@ module.exports.getAllServicesProvider = async function (req, res) {
 		let id = req.user.login_id;
 		let services = await db.public.provider_service.findAll({
 			where: { login_id: id },
+			include: [{ model: db.public.services }],
 			attributes: ["id", "service_id", "docs", "status"],
 		});
 		res.status(200).json({
