@@ -10,7 +10,6 @@ const verify = require("../functions/verifyFunc");
 const sercives = require("../controllers/serciveCtrl");
 const request = require("../controllers/requestCtrl");
 const community = require("../controllers/communityCtrl");
-const order = require("../controllers/external");
 // // Login and onboarding
 // router.post('/register', login.register);
 router.post("/login", login.login);
@@ -40,6 +39,7 @@ router.post("/verifyProvider", verify.user, sercives.acceptProviderService);
 router.post("/joinCommunity", verify.user, community.joinCommunity);
 router.post("/createCommunity", verify.user, community.addCommunity);
 router.get("/showCommunities", verify.user, community.showCommunities);
+router.post("/verifyCommunity", verify.user, community.acceptCommunityRequest);
 // // ATC and the ATC Strips
 // router.get('/atc/strips', atc.getAll);
 // router.get('/atc/progress/strip', atc.get);
@@ -50,8 +50,6 @@ router.get("/showCommunities", verify.user, community.showCommunities);
 // router.post("/grant/permission", login.allotPermission);
 // router.get("/get/user/team", login.getUserTeams);
 // router.get('/search/user', login.userFullTs);
-router.post("/order", order.orderProduct);
-router.get("/order", order.getProducts);
 
 router.post("/create/kv", verify.user, crud.create);
 router.get("/get/kv", crud.get);
