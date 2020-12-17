@@ -359,11 +359,19 @@ module.exports.payment = async function (req, res) {
 					customer: customer.id,
 				})
 			)
-			.then((charge) => console.log(charge))
-			.catch((err) => console.log(err));
-		res.status(200).json({
-			success: true,
-		});
+			.then((charge) => {
+				res.status(200).json({
+					success: true,
+					charge,
+				});
+			})
+			.catch((err) => {
+				res.status(500).json({
+					success: true,
+					err,
+				});
+				console.log(err);
+			});
 	} catch (err) {
 		console.log(err);
 		res.status(500).json({
