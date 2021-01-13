@@ -159,7 +159,7 @@ module.exports.showService = async function (req, res) {
 				"answers",
 				"completed_at",
 				"created_at",
-				"rate",
+				"price",
 				"status",
 				"time",
 				"provider_id",
@@ -198,7 +198,7 @@ module.exports.showServiceProvider = async function (req, res) {
 				"answers",
 				"completed_at",
 				"created_at",
-				"rate",
+				"price",
 				"status",
 				"time",
 				"provider_id",
@@ -242,7 +242,7 @@ module.exports.showServiceReciever = async function (req, res) {
 				"answers",
 				"completed_at",
 				"created_at",
-				"rate",
+				"price",
 				"status",
 				"time",
 				"provider_id",
@@ -325,7 +325,7 @@ module.exports.servicesAvailabeNow = async function (req, res) {
 				{ model: db.public.services, attributes: ["id", "name", "description", "questions"] },
 			],
 			where: { reciver_community: provider_community.community_id, provider_id: null },
-			attributes: ["id", "answers", "created_at", "rate", "status", "time", "reciever_id", "reciver_community"],
+			attributes: ["id", "answers", "created_at", "price", "status", "time", "reciever_id", "reciver_community"],
 		});
 
 		res.status(200).json({

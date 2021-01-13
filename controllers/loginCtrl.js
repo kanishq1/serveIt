@@ -80,6 +80,7 @@ module.exports.login = async function (req, res) {
 				verified: user.community_verified,
 				communities: structured_communities,
 				default_community,
+				message: "Login Successful",
 			});
 		} else {
 			user = await db.public.login.findOne({
@@ -116,6 +117,7 @@ module.exports.login = async function (req, res) {
 							role: login_data.role,
 							verified: login_data.community_verified,
 							community: null,
+							message: "Login Successful",
 						});
 					})
 					.catch((err) => {
@@ -150,6 +152,7 @@ module.exports.login = async function (req, res) {
 					verified: user.community_verified,
 					communities: structured_communities,
 					default_community,
+					message: "Login Successful",
 				});
 			}
 		}
@@ -171,10 +174,13 @@ module.exports.update = async function (req, res) {
 			new_user: false,
 			mobile: req.body.mobile,
 			email: req.body.email,
+			role: req.body.role,
+			community_verification_docs: req.body.community_verification_docs,
 		};
 		const user_updated = await db.public.login.update(user_obj, { where: { id: id }, returning: true });
 		res.status(200).json({
 			success: true,
+			message: "Update Successful",
 			user: user_updated[1][0],
 		});
 	} catch (err) {

@@ -6,6 +6,10 @@ module.exports.addService = async function (req, res) {
 		let service_obj = {
 			name: req.body.serviceName,
 			description: req.body.serviceDesc,
+			questions: req.body.questions,
+			price: req.body.price,
+			priceType: req.body.priceType,
+			additionalUnitPrice: req.body.additionalUnitPrice,
 		};
 
 		let service = await db.public.service.create(service_obj);
@@ -25,7 +29,6 @@ module.exports.addService = async function (req, res) {
 		});
 	}
 };
-
 module.exports.getAllServicesProvider = async function (req, res) {
 	try {
 		let id = req.user.login_id;
@@ -102,6 +105,37 @@ module.exports.acceptProviderService = async function (req, res) {
 		res.status(200).json({
 			success: true,
 			user: provider_accepted[1][0],
+		});
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			success: false,
+			error: {
+				message: "Internal Server Error",
+				description: err.description,
+			},
+		});
+	}
+};
+module.exports.modifyService = async function (req, res) {
+	try {
+		let id = req.body.service_id;
+
+		let service_obj = {
+			name: req.body.serviceName,
+			description: req.body.serviceDesc,
+			questions: req.body.questions,
+			price: req.body.price,
+			priceType: req.body.priceType,
+			additionalUnitPrice: req.body.additionalUnitPrice,
+		};
+
+		let service = await db.public.service.update(service_obj, { where: { id: id }, returning: true });
+
+		res.status(200).json({
+			success: true,
+			message: "service updated successfully",
+			service: service[1][0],
 		});
 	} catch (err) {
 		console.log(err);

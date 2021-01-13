@@ -9,11 +9,13 @@ module.exports.addCommunity = async function (req, res) {
 			name: req.body.name,
 			description: req.body.description,
 			address: req.body.address,
+			status: 1,
 		};
 
 		let community = await db.public.community.create(community_obj);
 
 		res.status(200).json({
+			message: "Community Added Successfully",
 			success: true,
 			community,
 		});
@@ -75,7 +77,7 @@ module.exports.joinCommunity = async function (req, res) {
 			}
 			return res.status(200).json({
 				success: true,
-				msg: "User belongs to this community already",
+				message: "User belongs to this community already",
 				communities: structured_communities,
 				user_already,
 			});
@@ -144,6 +146,7 @@ module.exports.joinCommunity = async function (req, res) {
 						role: newUser.role,
 						community_verified: newUser.community_verified,
 						communities: structured_communities,
+						message: "Joined Successfully",
 					});
 				});
 		} else {
@@ -157,6 +160,7 @@ module.exports.joinCommunity = async function (req, res) {
 			return res.status(200).json({
 				success: true,
 				user: user_joined,
+				message: "Joined Successfully",
 			});
 		}
 	} catch (err) {
@@ -170,7 +174,7 @@ module.exports.joinCommunity = async function (req, res) {
 		});
 	}
 };
-module.exports.acceptCommunityRequest = async function (req, res) {
+module.exports.acceptJoinCommunityRequest = async function (req, res) {
 	try {
 		// let id = req.user.login_id;
 		let user_community_id = req.body.user_community_id;
@@ -199,7 +203,7 @@ module.exports.acceptCommunityRequest = async function (req, res) {
 		});
 	}
 };
-module.exports.rejectCommunityRequest = async function (req, res) {
+module.exports.rejectJoinCommunityRequest = async function (req, res) {
 	try {
 		// let id = req.user.login_id;
 		let user_community_id = req.body.user_community_id;
@@ -219,7 +223,7 @@ module.exports.rejectCommunityRequest = async function (req, res) {
 		});
 	} catch (err) {
 		console.log(err);
-		res.status(500).json({
+		tus(500).json({
 			success: false,
 			error: {
 				message: "Internal Server Error",
@@ -235,6 +239,7 @@ module.exports.leaveCommunity = async function (req, res) {
 		res.status(200).json({
 			success: true,
 			user: user_left,
+			message: "Left Community Successfully",
 		});
 	} catch (err) {
 		console.log(err);
@@ -256,6 +261,7 @@ module.exports.showCommunities = async function (req, res) {
 		res.status(200).json({
 			success: true,
 			communities,
+			message: "Success",
 		});
 	} catch (err) {
 		console.log(err);
@@ -275,6 +281,34 @@ module.exports.showCommunitiesUser = async function (req, res) {
 		res.status(200).json({
 			success: true,
 			communities,
+		});
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			success: false,
+			error: {
+				message: "Internal Server Error",
+				description: err.description,
+			},
+		});
+	}
+};
+module.exports.requestCommunity = async function (req, res) {
+	try {
+		// let id = req.body.firebase_id;
+		let community_obj = {
+			name: req.body.name,
+			description: req.body.description,
+			address: req.body.address,
+			status: 0,
+		};
+
+		let community = await db.public.community.create(community_obj);
+
+		res.status(200).json({
+			message: "Community Requested Successfully",
+			success: true,
+			community,
 		});
 	} catch (err) {
 		console.log(err);

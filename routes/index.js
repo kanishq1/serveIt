@@ -30,16 +30,17 @@ router.post("/updateStatusRequest", verify.user, request.updateStatus);
 router.post("/find", request.findDistance);
 router.post("/payment", request.payment);
 
-router.post("/addService", verify.user, sercives.addService);
-router.get("/services", verify.user, sercives.getAllServices);
+router.post("/addService", sercives.addService);
+router.get("/services", sercives.getAllServices);
 router.get("/providerServices", verify.user, sercives.getAllServicesProvider);
 router.post("/joinServices", verify.user, sercives.applyService);
 router.post("/verifyProvider", verify.user, sercives.acceptProviderService);
+router.post("/modifyService", sercives.modifyService);
 
 router.post("/joinCommunity", verify.user, community.joinCommunity);
 router.post("/createCommunity", verify.user, community.addCommunity);
 router.get("/showCommunities", verify.user, community.showCommunities);
-router.post("/verifyCommunity", verify.user, community.acceptCommunityRequest);
+router.post("/verifyUserCommunity", verify.user, community.acceptJoinCommunityRequest);
 // // ATC and the ATC Strips
 // router.get('/atc/strips', atc.getAll);
 // router.get('/atc/progress/strip', atc.get);

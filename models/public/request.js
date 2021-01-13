@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
 			answers: { type: DataTypes.JSONB },
 			status: { type: DataTypes.INTEGER },
 			// 0 - requestd, 1 - accepeted, 2 - not accepted by any one, 3 - in progress, 4 - completed, 5- left in between, -1 : cancelled by reciever
-			rate: { type: DataTypes.TEXT },
+			price: { type: DataTypes.TEXT },
 			reciver_community: { type: DataTypes.BIGINT },
 			provider_community: { type: DataTypes.BIGINT },
 			created_at: {
