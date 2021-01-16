@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
 			// links: { type: DataTypes.JSONB },
 			profile_pic: { type: DataTypes.TEXT },
 			// Verifications
-			community_verification_docs: { type: DataTypes.JSONB },
+			verification_docs: { type: DataTypes.JSONB },
 			community_verified: {
 				type: DataTypes.INTEGER,
 				defaultValue: -1,

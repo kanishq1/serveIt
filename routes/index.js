@@ -39,7 +39,7 @@ router.post("/modifyService", sercives.modifyService);
 
 router.post("/joinCommunity", verify.user, community.joinCommunity);
 router.post("/createCommunity", verify.user, community.addCommunity);
-router.get("/showCommunities", verify.user, community.showCommunities);
+router.post("/showCommunities", verify.user, community.showCommunities);
 router.post("/verifyUserCommunity", verify.user, community.acceptJoinCommunityRequest);
 // // ATC and the ATC Strips
 // router.get('/atc/strips', atc.getAll);

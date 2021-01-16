@@ -175,7 +175,7 @@ module.exports.update = async function (req, res) {
 			mobile: req.body.mobile,
 			email: req.body.email,
 			role: req.body.role,
-			community_verification_docs: req.body.community_verification_docs,
+			verification_docs: req.body.verification_docs,
 		};
 		const user_updated = await db.public.login.update(user_obj, { where: { id: id }, returning: true });
 		res.status(200).json({

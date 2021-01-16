@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 				defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
 			},
-			status: { type: DataTypes.INTEGER, defaultValue: 0 },
+			// status: { type: DataTypes.INTEGER, defaultValue: 0 },
 			updated_at: DataTypes.DATE,
 			deleted_at: DataTypes.DATE,
 		},
