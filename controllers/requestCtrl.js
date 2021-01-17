@@ -318,7 +318,10 @@ module.exports.findDistance = async function (req, res) {
 module.exports.servicesAvailabeNow = async function (req, res) {
 	try {
 		let provider_id = req.user.login_id;
+		if (!provider_id) throw Error("Invalid Token");
 		let provider_community = await db.public.user_community.findOne({ where: { login_id: provider_id } });
+		if (!provider_community) throw Error("Community of user not found");
+
 		let available = await db.public.request.findAll({
 			include: [
 				{ model: db.public.login, as: "reciever", attributes: ["id", "name", "profile_pic"] },
@@ -327,6 +330,7 @@ module.exports.servicesAvailabeNow = async function (req, res) {
 			where: { reciver_community: provider_community.community_id, provider_id: null },
 			attributes: ["id", "answers", "created_at", "price", "status", "time", "reciever_id", "reciver_community"],
 		});
+		if (!available) throw Error("No available services");
 
 		res.status(200).json({
 			success: true,
@@ -337,7 +341,7 @@ module.exports.servicesAvailabeNow = async function (req, res) {
 		res.status(500).json({
 			success: false,
 			error: {
-				message: "Internal Server Error",
+				message: err.message || "Internal Server Error",
 				description: err.description,
 			},
 		});
