@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
 			profile_pic: { type: DataTypes.TEXT },
 			// Verifications
 			verification_docs: { type: DataTypes.JSONB },
+			community_id: { type: DataTypes.BIGINT },
 			community_verified: {
 				type: DataTypes.INTEGER,
 				defaultValue: -1,

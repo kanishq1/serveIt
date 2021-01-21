@@ -35,6 +35,8 @@ module.exports.joinCommunity = async function (req, res) {
 		let id = req.user.login_id;
 		let firebase_id = req.user.firebase_id;
 		let community_id = req.body.community_id;
+		let community_check = await db.public.community.findOne({ where: { id: community_id } });
+		if (!community_check) throw Error("Community does not exist");
 		let docs = req.body.docs;
 		let user_already = await db.public.login.findOne({
 			include: {
@@ -46,42 +48,8 @@ module.exports.joinCommunity = async function (req, res) {
 		});
 		let user = await db.public.user_community.findOne({ where: { login_id: id } });
 		let loggedUser = await db.public.login.findOne({ where: { id: id } });
-		if (user_already) {
-			let communities = await db.public.login.findAll({
-				include: {
-					model: db.public.community,
-					attributes: ["id", "name", "description", "address"],
-				},
-				where: {
-					firebase_id: firebase_id,
-				},
-				attributes: ["id"],
-			});
-			let structured_communities;
-			if (communities[0].id && communities[0].communities[0]) {
-				structured_communities = communities.map((i, k) => {
-					return Object.assign(
-						{},
-						{
-							login_id: i.id,
-							community_id: i.communities[0].id,
-							community_name: i.communities[0].name,
-							community_description: i.communities[0].description,
-							community_address: i.communities[0].address,
-							status: i.communities[0].user_community.status,
-						}
-					);
-				});
-			} else {
-				structured_communities = null;
-			}
-			return res.status(200).json({
-				success: true,
-				message: "User belongs to this community already",
-				communities: structured_communities,
-				user_already,
-			});
-		}
+		if (user_already) throw Error("User already belongs to this community");
+
 		if (user && !user_already) {
 			db.public.login
 				.create({
@@ -93,6 +61,7 @@ module.exports.joinCommunity = async function (req, res) {
 					mobile: loggedUser.mobile,
 					email: loggedUser.email,
 					community_verified: 0,
+					community_id: community_id,
 				})
 				.then(async (newUser) => {
 					console.log(newUser);
@@ -156,7 +125,10 @@ module.exports.joinCommunity = async function (req, res) {
 				docs: docs,
 				status: 0,
 			});
-			const login_verify = await db.public.login.update({ community_verified: 0 }, { where: { id: id } });
+			const login_verify = await db.public.login.update(
+				{ community_verified: 0, community_id: community_id },
+				{ where: { id: id } }
+			);
 			return res.status(200).json({
 				success: true,
 				user: user_joined,
@@ -168,7 +140,7 @@ module.exports.joinCommunity = async function (req, res) {
 		res.status(500).json({
 			success: false,
 			error: {
-				message: "Internal Server Error",
+				message: err.message || "Internal Server Error",
 				description: err.description,
 			},
 		});
@@ -256,7 +228,7 @@ module.exports.showCommunities = async function (req, res) {
 	try {
 		// let id = req.body.firebase_id;
 
-		let communities = await db.public.community.findAll({});
+		let communities = await db.public.community.findAll({ where: { status: 0 } });
 
 		res.status(200).json({
 			success: true,
