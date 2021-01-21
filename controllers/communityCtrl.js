@@ -228,7 +228,7 @@ module.exports.showCommunities = async function (req, res) {
 	try {
 		// let id = req.body.firebase_id;
 
-		let communities = await db.public.community.findAll({ where: { status: 0 } });
+		let communities = await db.public.community.findAll({ where: { status: 1 } });
 
 		res.status(200).json({
 			success: true,

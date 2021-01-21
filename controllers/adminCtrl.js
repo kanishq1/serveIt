@@ -51,6 +51,72 @@ module.exports.removeCommunity = async function (req, res) {
 		});
 	}
 };
+module.exports.listCommunities = async function (req, res) {
+	try {
+		// let id = req.body.firebase_id;
+
+		let communities = await db.public.community.findAll({ where: { status: 1 } });
+
+		res.status(200).json({
+			success: true,
+			communities,
+			message: "Success",
+		});
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			success: false,
+			error: {
+				message: "Internal Server Error",
+				description: err.description,
+			},
+		});
+	}
+};
+module.exports.listRequestedCommunities = async function (req, res) {
+	try {
+		// let id = req.body.firebase_id;
+
+		let communities = await db.public.community.findAll({ where: { status: 0 } });
+
+		res.status(200).json({
+			success: true,
+			communities,
+			message: "Success",
+		});
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			success: false,
+			error: {
+				message: "Internal Server Error",
+				description: err.description,
+			},
+		});
+	}
+};
+module.exports.acceptCommunity = async function (req, res) {
+	try {
+		// let id = req.body.firebase_id;
+		let community_id = req.body.community_id;
+		let communities = await db.public.community.update({ status: 1 }, { where: { id: community_id } });
+
+		res.status(200).json({
+			success: true,
+			// communities,
+			message: "Success",
+		});
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			success: false,
+			error: {
+				message: "Internal Server Error",
+				description: err.description,
+			},
+		});
+	}
+};
 // list communties
 // list users
 // list services
