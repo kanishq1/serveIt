@@ -12,7 +12,7 @@ module.exports.addService = async function (req, res) {
 			additionalUnitPrice: req.body.additionalUnitPrice,
 		};
 
-		let service = await db.public.service.create(service_obj);
+		let service = await db.public.services.create(service_obj);
 
 		res.status(200).json({
 			success: true,
@@ -29,89 +29,42 @@ module.exports.addService = async function (req, res) {
 		});
 	}
 };
-module.exports.getAllServicesProvider = async function (req, res) {
-	try {
-		let id = req.user.login_id;
-		let services = await db.public.provider_service.findAll({
-			where: { login_id: id },
-			include: [{ model: db.public.services }],
-			attributes: ["id", "service_id", "docs", "status"],
-		});
-		res.status(200).json({
-			success: true,
-			services: services,
-		});
-	} catch (err) {
-		console.log(err);
-		res.status(500).json({
-			success: false,
-			error: {
-				message: "Internal Server Error",
-				description: err.description,
-			},
-		});
-	}
-};
 module.exports.getAllServices = async function (req, res) {
 	try {
-		let services = await db.public.services.findAll({});
+		let services = await db.public.services.findAll({ attributes: ["id", "name"] });
+		if (!services) throw Error("No services found");
 		res.status(200).json({
 			success: true,
 			services: services,
+			message: "Success",
 		});
 	} catch (err) {
 		console.log(err);
 		res.status(500).json({
 			success: false,
 			error: {
-				message: "Internal Server Error",
+				message: err.message || "Internal Server Error",
 				description: err.description,
 			},
 		});
 	}
 };
-module.exports.applyService = async function (req, res) {
+module.exports.getServiceById = async function (req, res) {
 	try {
-		let id = req.user.login_id;
-		// let user = await db.public.login.findOne({ where: { firebase_id: id } });
-		let service = req.body.service_id;
-		const provider = await db.public.provider_service.create({ login_id: id, service_id: service, status: 0 });
+		let id = req.params.id;
+		let service = await db.public.services.findOne({ where: { id } });
+		if (!service) throw Error("Service not found");
 		res.status(200).json({
 			success: true,
-			provider: provider,
+			service,
+			message: "Success",
 		});
 	} catch (err) {
 		console.log(err);
 		res.status(500).json({
 			success: false,
 			error: {
-				message: "Internal Server Error",
-				description: err.description,
-			},
-		});
-	}
-};
-module.exports.acceptProviderService = async function (req, res) {
-	try {
-		// let id = req.user.login_id;
-		let provider_id = req.body.provider_id;
-		let status = req.body.status;
-		const provider_accepted = await db.public.provider.update(
-			{
-				status: status,
-			},
-			{ where: { id: provider_id }, returning: true }
-		);
-		res.status(200).json({
-			success: true,
-			user: provider_accepted[1][0],
-		});
-	} catch (err) {
-		console.log(err);
-		res.status(500).json({
-			success: false,
-			error: {
-				message: "Internal Server Error",
+				message: err.message || "Internal Server Error",
 				description: err.description,
 			},
 		});

@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			description: { type: DataTypes.TEXT },
 			questions: { type: DataTypes.JSONB },
-			price: { type: DataTypes.JSONB },
-			additionalUnitPrice: { type: DataTypes.JSONB },
+			price: { type: DataTypes.INTEGER },
+			certificateRequired: { type: DataTypes.BOOLEAN },
 			priceType: { type: DataTypes.TEXT },
 			created_at: {
 				type: DataTypes.DATE,
@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
 			deleted_at: DataTypes.DATE,
 		},
 		{
+			timestamps: false,
 			underscored: true,
 		}
 	);

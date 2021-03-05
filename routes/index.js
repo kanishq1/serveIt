@@ -8,6 +8,7 @@ var atc = require("../controllers/atc-strips-no-cache");
 var crud = require("../controllers/crud");
 const verify = require("../functions/verifyFunc");
 const sercives = require("../controllers/serciveCtrl");
+const provider = require("../controllers/providerCtrl");
 const request = require("../controllers/requestCtrl");
 const community = require("../controllers/communityCtrl");
 const admin = require("../controllers/adminCtrl");
@@ -33,10 +34,12 @@ router.post("/payment", request.payment);
 
 router.post("/addService", sercives.addService);
 router.get("/services", sercives.getAllServices);
-router.get("/providerServices", verify.user, sercives.getAllServicesProvider);
-router.post("/joinServices", verify.user, sercives.applyService);
-router.post("/verifyProvider", verify.user, sercives.acceptProviderService);
-router.post("/modifyService", sercives.modifyService);
+router.get("/services/:id", sercives.getServiceById);
+router.put("/modifyService", sercives.modifyService);
+
+router.get("/providerServices", verify.user, provider.getAllServicesProvider);
+router.post("/joinServices", verify.user, provider.applyService);
+router.post("/verifyProvider", verify.user, provider.acceptProviderService);
 
 router.post("/joinCommunity", verify.user, community.joinCommunity);
 router.post("/createCommunity", verify.user, community.addCommunity);
@@ -46,6 +49,12 @@ router.post("/verifyUserCommunity", verify.user, community.acceptJoinCommunityRe
 
 router.post("/admin/addCommunity", admin.addCommunity);
 router.post("/admin/removeCommunity", admin.removeCommunity);
+router.post("/admin/login", admin.adminLogin);
+router.post("/admin/acceptProvider", admin.acceptProvider);
+router.post("/admin/rejectProvider", admin.rejectProvider);
+router.get("/admin/services", admin.listService);
+router.get("/admin/providers", admin.listProviders);
+router.post("/admin/addServices", admin.addService);
 // // ATC and the ATC Strips
 // router.get('/atc/strips', atc.getAll);
 // router.get('/atc/progress/strip', atc.get);

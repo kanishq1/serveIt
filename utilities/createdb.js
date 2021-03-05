@@ -7,7 +7,7 @@ async function public_force(testing) {
 	if (!testing) {
 		console.log("Public force executed");
 	}
-	var user, service, user_community, community, provider;
+	let user, service, user_community, community, provider;
 
 	community = await db.public.community.create({
 		name: "abc",
@@ -15,7 +15,7 @@ async function public_force(testing) {
 	});
 
 	// Adding the permissions for the site admin
-	var user = await db.public.login.create({
+	user = await db.public.login.create({
 		name: "Master",
 		last_name: "Admin",
 		sex: 1,
@@ -30,16 +30,32 @@ async function public_force(testing) {
 
 	// })
 	service = await db.public.services.create({
-		name: "abc",
-		description: "hello world",
+		name: "Baby Sitting",
+		priceType: "fixed",
+		description: "Any Description Here",
+		price: 10,
 		questions: [
-			{ id: 1, question: "abc" },
-			{ id: 2, question: "qrt" },
+			{ id: 1, question: "Amount", text: "Number of children", type: "integer", price: 5 },
+			{
+				id: 2,
+				question: "Duration",
+				text: null,
+				type: "mcq",
+				options: { "5hr": 5, "8hr": 7, "10hr": 8, "24hr": 15 },
+			},
+			{
+				id: 3,
+				question: "Options",
+				text: null,
+				type: "mmcq",
+				options: {
+					"Full : Feeding Bathing Watching": 20,
+					"Watching Only": 10,
+					"Feeding & Watching": 15,
+					"Bathing and Watching": 10,
+				},
+			},
 		],
-	});
-	service = await db.public.services.create({
-		name: "abc",
-		description: "hello world",
 	});
 	provider = await db.public.provider_service.create({
 		login_id: 1,

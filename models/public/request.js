@@ -12,6 +12,8 @@ module.exports = (sequelize, DataTypes) => {
 			provider_id: { type: DataTypes.BIGINT },
 			// service_id: { type: DataTypes.BIGINT },
 			time: { type: DataTypes.DATE },
+			type: { type: DataTypes.TEXT },
+			//  type : on demand or Scheduled
 			unit: { type: DataTypes.TEXT },
 			answers: { type: DataTypes.JSONB },
 			status: { type: DataTypes.INTEGER },

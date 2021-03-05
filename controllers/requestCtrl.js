@@ -6,11 +6,13 @@ const stripe = require("stripe")(
 module.exports.requestService = async function (req, res) {
 	try {
 		let reciver_community = await db.public.user_community.findOne({ where: { login_id: req.user.login_id } });
+		if (!reciver_community) throw Error("Reciever community not found");
 		let request_obj = {
 			reciever_id: req.user.login_id,
 			service_id: req.body.service_id,
 			answers: req.body.answers,
 			time: req.body.time,
+			type: req.body.type,
 			reciver_community: reciver_community.community_id,
 			status: 0,
 		};
@@ -20,7 +22,7 @@ module.exports.requestService = async function (req, res) {
 		if (is_repeat) {
 			res.status(200).json({
 				success: true,
-				msg: "Request already made",
+				message: "Request already made",
 			});
 			return;
 		}
@@ -29,13 +31,14 @@ module.exports.requestService = async function (req, res) {
 		res.status(200).json({
 			success: true,
 			request,
+			message: "Successfully requested",
 		});
 	} catch (err) {
 		console.log(err);
 		res.status(500).json({
 			success: false,
 			error: {
-				message: "Internal Server Error",
+				message: err.message || "Internal Server Error",
 				description: err.description,
 			},
 		});
@@ -46,6 +49,7 @@ module.exports.acceptService = async function (req, res) {
 		let id = req.body.request_id;
 		let provider_id = req.user.login_id;
 		let provider_community = await db.public.user_community.findOne({ where: { login_id: provider_id } });
+		if (!provider_community) throw Error("Provider community not found");
 		let provider_service = await db.public.provider_service.findOne({ where: { login_id: provider_id } });
 		let request = await db.public.request.update(
 			{
@@ -63,13 +67,14 @@ module.exports.acceptService = async function (req, res) {
 		res.status(200).json({
 			success: true,
 			request: request[1][0],
+			message: "Accepted Successfully",
 		});
 	} catch (err) {
 		console.log(err);
 		res.status(500).json({
 			success: false,
 			error: {
-				message: "Internal Server Error",
+				message: err.message || "Internal Server Error",
 				description: err.description,
 			},
 		});
@@ -82,24 +87,20 @@ module.exports.cancelServiceReciever = async function (req, res) {
 		let is_user_true = await db.public.request.findOne({
 			where: { reciever_id: reciever_id, id: id },
 		});
-		if (!is_user_true) {
-			return res.status(200).json({
-				success: true,
-				msg: "You are not the user",
-			});
-		}
-		let request = await db.public.request.update({ status: -1 }, { where: { id: id } });
+		if (!is_user_true) throw Error("You are not the user");
+		let request = await db.public.request.update({ status: -1 }, { where: { id: id, type: "scheduled" } });
+		if (!request) throw Error("Failed");
 
 		res.status(200).json({
 			success: true,
-			msg: "deleted",
+			message: "deleted",
 		});
 	} catch (err) {
 		console.log(err);
 		res.status(500).json({
 			success: false,
 			error: {
-				message: "Internal Server Error",
+				message: err.message || "Internal Server Error",
 				description: err.description,
 			},
 		});
@@ -112,31 +113,22 @@ module.exports.cancelServiceProvider = async function (req, res) {
 		let is_user_true = await db.public.request.findOne({
 			where: { provider_id: provider_id, id: id },
 		});
-		if (!is_user_true) {
-			return res.status(200).json({
-				success: true,
-				msg: "You are not the user",
-			});
-		}
-		let request = await db.public.request.update(
-			{ provider_id: null, provider_community: null },
-			{
-				where: { id: id },
-				returning: true,
-			}
-		);
+		if (!is_user_true) throw Error("You are not the user");
+
+		let request = await db.public.request.update({ status: -1 }, { where: { id: id } });
+		if (!request) throw Error("Failed");
 
 		res.status(200).json({
 			success: true,
-			msg: "canceled successfully",
-			request: request[1][0],
+			message: "canceled successfully",
+			// request: request[1][0],
 		});
 	} catch (err) {
 		console.log(err);
 		res.status(500).json({
 			success: false,
 			error: {
-				message: "Internal Server Error",
+				message: err.message || "Internal Server Error",
 				description: err.description,
 			},
 		});
@@ -328,7 +320,17 @@ module.exports.servicesAvailabeNow = async function (req, res) {
 				{ model: db.public.services, attributes: ["id", "name", "description", "questions"] },
 			],
 			where: { reciver_community: provider_community.community_id, provider_id: null },
-			attributes: ["id", "answers", "created_at", "price", "status", "time", "reciever_id", "reciver_community"],
+			attributes: [
+				"id",
+				"answers",
+				"created_at",
+				"price",
+				"type",
+				"status",
+				"time",
+				"reciever_id",
+				"reciver_community",
+			],
 		});
 		if (!available) throw Error("No available services");
 

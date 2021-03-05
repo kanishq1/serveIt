@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			status: { type: DataTypes.INTEGER },
 			docs: { type: DataTypes.JSONB },
-			// status : 0 - applied, 1-verified, 2-rejected
+			// status : 0 - applied, 1-verified, -1-rejected
 			// login_id: { type: DataTypes.BIGINT },
 			// service_id: { type: DataTypes.BIGINT },
 			created_at: {
