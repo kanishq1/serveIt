@@ -57,6 +57,131 @@ async function public_force(testing) {
 			},
 		],
 	});
+	await db.public.services.create({
+		name: "Care Giving",
+		priceType: "fixed",
+		description: "Any Description Here",
+		price: 10,
+		questions: [
+			// { id: 1, question: "Amount", text: "Number of children", type: "integer", price: 5 },
+			{
+				id: 1,
+				question: "Duration",
+				text: null,
+				type: "mcq",
+				options: { "5hr": 5, "8hr": 7, "10hr": 8, "24hr": 15 },
+			},
+			{
+				id: 2,
+				question: "Options",
+				text: null,
+				type: "mmcq",
+				options: {
+					"Full : Feeding, Bathing, Watching": 20,
+					"Watching Only": 10,
+					"Bathing Only": 10,
+					"Fedding Only": 10,
+					"Feeding & Watching": 15,
+					"Feeding & Bathing": 15,
+					"Bathing and Watching": 10,
+				},
+			},
+		],
+	});
+	await db.public.services.create({
+		name: "Hair Dressing",
+		priceType: "negotiable",
+		description: "Any Description Here",
+		price: 10,
+		questions: [
+			// { id: 1, question: "Amount", text: "Number of children", type: "integer", price: 5 },
+			{
+				id: 1,
+				question: "Type",
+				text: null,
+				type: "mcq",
+				options: { Hairdresser: 0, Barber: 0 },
+			},
+			{
+				id: 2,
+				question: "Hairdresser",
+				text: null,
+				type: "mmcq",
+				options: {
+					"Full styling": 20,
+					"Process Washing": 10,
+					"Only Cutting": 10,
+					"Only Braiding": 10,
+					"Only Custom": 10,
+				},
+			},
+			{
+				id: 2,
+				question: "Barber",
+				text: null,
+				type: "mmcq",
+				options: {
+					"Full styling": 20,
+					"Haircut Only": 10,
+					"Shave Only": 10,
+				},
+			},
+		],
+	});
+	await db.public.services.create({
+		name: "Car wash",
+		priceType: "fixed",
+		description: "Any Description Here",
+		price: 10,
+		questions: [
+			// { id: 1, question: "Amount", text: "Number of children", type: "integer", price: 5 },
+			{
+				id: 1,
+				question: "Vehicle Type",
+				text: null,
+				type: "mcq",
+				options: { Car: 0, Suv: 0 },
+			},
+			{
+				id: 2,
+				question: "Options",
+				text: null,
+				type: "mmcq",
+				options: {
+					"Full Service : Wash/Vacuum ": 20,
+					"Wash outside only": 15,
+					"Inside wipe/vacuum only": 15,
+				},
+			},
+		],
+	});
+	await db.public.services.create({
+		name: "Handyman",
+		priceType: "fixed",
+		description: "Any Description Here",
+		price: 10,
+		questions: [
+			// { id: 1, question: "Amount", text: "Number of children", type: "integer", price: 5 },
+			{
+				id: 1,
+				question: "Vehicle Type",
+				text: null,
+				type: "mcq",
+				options: { Car: 0, Suv: 0 },
+			},
+			{
+				id: 2,
+				question: "Options",
+				text: null,
+				type: "mmcq",
+				options: {
+					"Full Service : Wash/Vacuum ": 20,
+					"Wash outside only": 15,
+					"Inside wipe/vacuum only": 15,
+				},
+			},
+		],
+	});
 	provider = await db.public.provider_service.create({
 		login_id: 1,
 		service_id: 1,
