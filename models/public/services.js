@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
 			price: { type: DataTypes.INTEGER },
 			certificateRequired: { type: DataTypes.BOOLEAN },
 			priceType: { type: DataTypes.TEXT },
+			chargesText: { type: DataTypes.TEXT },
 			created_at: {
 				type: DataTypes.DATE,
 				allowNull: false,

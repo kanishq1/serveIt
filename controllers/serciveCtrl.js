@@ -3,6 +3,10 @@ var db = require("../models/db");
 
 module.exports.addService = async function (req, res) {
 	try {
+		// let chargesText =
+		// 	req.body.priceType == "negotiable"
+		// 		? "All prices are set by cook. This is a negotiable service. Negotiate with provider over chat, and make payment there, Serve it, deducts 10% transaction fee."
+		// 		: "You will be charged. Serve-It will charge 10% as maintenance fee.";
 		let service_obj = {
 			name: req.body.serviceName,
 			description: req.body.serviceDesc,
@@ -10,6 +14,7 @@ module.exports.addService = async function (req, res) {
 			price: req.body.price,
 			priceType: req.body.priceType,
 			additionalUnitPrice: req.body.additionalUnitPrice,
+			chargesText: req.body.chargesText,
 		};
 
 		let service = await db.public.services.create(service_obj);

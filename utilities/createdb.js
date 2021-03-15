@@ -39,6 +39,7 @@ async function public_force(testing) {
 	service = await db.public.services.create({
 		name: "Baby Sitting",
 		priceType: "fixed",
+		chargesText: "You will be charged. Serve-It will charge 10% as maintenance fee.",
 		description: "Any Description Here",
 		price: 10,
 		questions: [
@@ -67,6 +68,7 @@ async function public_force(testing) {
 	await db.public.services.create({
 		name: "Care Giving",
 		priceType: "fixed",
+		chargesText: "You will be charged. Serve-It will charge 10% as maintenance fee.",
 		description: "Any Description Here",
 		price: 10,
 		questions: [
@@ -98,6 +100,8 @@ async function public_force(testing) {
 	await db.public.services.create({
 		name: "Hair Dressing",
 		priceType: "negotiable",
+		chargesText:
+			"All prices are set by hair dresser. This is a negotiable service. Negotiate with provider over chat, and make payment there, Serve it, deducts 10% transaction fee.",
 		description: "Any Description Here",
 		price: 0,
 		questions: [
@@ -165,6 +169,7 @@ async function public_force(testing) {
 	await db.public.services.create({
 		name: "Handyman",
 		priceType: "fixed",
+		chargesText: "You will be charged. Serve-It will charge 10% as maintenance fee.",
 		description: "Any Description Here",
 		price: 10,
 		questions: [
@@ -189,6 +194,7 @@ async function public_force(testing) {
 	await db.public.services.create({
 		name: "House Keeping",
 		priceType: "fixed",
+		chargesText: "You will be charged. Serve-It will charge 10% as maintenance fee.",
 		description: "Any Description Here",
 		price: 10,
 		questions: [
@@ -232,6 +238,8 @@ async function public_force(testing) {
 	await db.public.services.create({
 		name: "Cooking",
 		priceType: "negotiable",
+		chargesText:
+			"All prices are set by cook. This is a negotiable service. Negotiate with provider over chat, and make payment there, Serve it, deducts 10% transaction fee.",
 		description: "Any Description Here",
 		price: 0,
 		questions: [
@@ -264,6 +272,7 @@ async function public_force(testing) {
 	await db.public.services.create({
 		name: "Shopping",
 		priceType: "fixed",
+		chargesText: "You will be charged. Serve-It will charge 10% as maintenance fee.",
 		description: "Any Description Here",
 		price: 10,
 		questions: [
@@ -283,6 +292,7 @@ async function public_force(testing) {
 	await db.public.services.create({
 		name: "Pet Sitting",
 		priceType: "fixed",
+		chargesText: "You will be charged. Serve-It will charge 10% as maintenance fee.",
 		description: "Any Description Here",
 		price: 10,
 		questions: [
@@ -320,7 +330,8 @@ async function public_force(testing) {
 	});
 	await db.public.services.create({
 		name: "Moving In/Out",
-		priceType: "negotiable",
+		priceType: "fixed",
+		chargesText: "You will be charged. Serve-It will charge 10% as maintenance fee.",
 		description: "Any Description Here",
 		price: 0,
 		questions: [
