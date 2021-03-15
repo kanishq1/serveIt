@@ -10,8 +10,15 @@ async function public_force(testing) {
 	let user, service, user_community, community, provider;
 
 	community = await db.public.community.create({
-		name: "abc",
-		description: "hello world",
+		name: "test community",
+		description: "this is a test community",
+		address: {
+			latitude: "9405",
+			locality: "test locality",
+			longitude: "9405",
+			"any other info": "adh",
+		},
+		status: 1,
 	});
 
 	// Adding the permissions for the site admin
@@ -92,7 +99,7 @@ async function public_force(testing) {
 		name: "Hair Dressing",
 		priceType: "negotiable",
 		description: "Any Description Here",
-		price: 10,
+		price: 0,
 		questions: [
 			// { id: 1, question: "Amount", text: "Number of children", type: "integer", price: 5 },
 			{
@@ -108,11 +115,11 @@ async function public_force(testing) {
 				text: null,
 				type: "mmcq",
 				options: {
-					"Full styling": 20,
-					"Process Washing": 10,
-					"Only Cutting": 10,
-					"Only Braiding": 10,
-					"Only Custom": 10,
+					"Full styling": 0,
+					"Process Washing": 0,
+					"Only Cutting": 0,
+					"Only Braiding": 0,
+					"Only Custom": 0,
 				},
 			},
 			{
@@ -121,9 +128,9 @@ async function public_force(testing) {
 				text: null,
 				type: "mmcq",
 				options: {
-					"Full styling": 20,
-					"Haircut Only": 10,
-					"Shave Only": 10,
+					"Full styling": 0,
+					"Haircut Only": 0,
+					"Shave Only": 0,
 				},
 			},
 		],
@@ -161,13 +168,37 @@ async function public_force(testing) {
 		description: "Any Description Here",
 		price: 10,
 		questions: [
+			{
+				id: 1,
+				question: "Options",
+				text: null,
+				type: "mmcq",
+				options: {
+					"Fix Toilet": 20,
+					"Change Bulb": 10,
+					"Move appliances": 25,
+					"Move furniture": 15,
+					"Garbage Disposal": 15,
+					"Replace / FixPaint Wall": 20,
+					"Unclog drain": 20,
+					"Install Washer / DryerMoving to lout": 20,
+				},
+			},
+		],
+	});
+	await db.public.services.create({
+		name: "House Keeping",
+		priceType: "fixed",
+		description: "Any Description Here",
+		price: 10,
+		questions: [
 			// { id: 1, question: "Amount", text: "Number of children", type: "integer", price: 5 },
 			{
 				id: 1,
-				question: "Vehicle Type",
+				question: "Size of apartment",
 				text: null,
 				type: "mcq",
-				options: { Car: 0, Suv: 0 },
+				options: { "1 Bedroom": 10, "2 Bedroom": 15, "3 Bedroom": 20 },
 			},
 			{
 				id: 2,
@@ -175,9 +206,140 @@ async function public_force(testing) {
 				text: null,
 				type: "mmcq",
 				options: {
-					"Full Service : Wash/Vacuum ": 20,
-					"Wash outside only": 15,
-					"Inside wipe/vacuum only": 15,
+					"Full Service : All rooms": 20,
+					"Bedrooms and Bathrooms only": 15,
+					"Bedroom only": 10,
+					"Bathroom only": 10,
+					"Livingroom & kitchen only": 15,
+					"Livingroom only": 10,
+					"Kitchen only": 10,
+					"Take Trash out": 5,
+				},
+			},
+			{
+				id: 3,
+				question: "Laundry",
+				text: null,
+				type: "mmcq",
+				options: {
+					"Full Service : Washing, Drying": 10,
+					"Folding, Ironing": 10,
+				},
+			},
+			{ id: 4, question: "More Options", text: "Additional room", type: "integer", price: 10 },
+		],
+	});
+	await db.public.services.create({
+		name: "Cooking",
+		priceType: "negotiable",
+		description: "Any Description Here",
+		price: 0,
+		questions: [
+			// { id: 1, question: "Amount", text: "Number of children", type: "integer", price: 5 },
+			{
+				id: 1,
+				question: "Options",
+				text: null,
+				type: "mmcq",
+				options: { "Cooking what is available": 0, "Pre Cooked": 0, Vegan: 0 },
+			},
+			{ id: 2, question: "Size", text: "Meals", type: "integer", price: 0 },
+			{
+				id: 3,
+				question: "Style",
+				text: null,
+				type: "mmcq",
+				options: {
+					American: 0,
+					Asian: 0,
+					Indian: 0,
+					Jamaican: 0,
+					Italian: 0,
+					Mexican: 0,
+					Hatian: 0,
+				},
+			},
+		],
+	});
+	await db.public.services.create({
+		name: "Shopping",
+		priceType: "fixed",
+		description: "Any Description Here",
+		price: 10,
+		questions: [
+			{
+				id: 1,
+				question: "Options",
+				text: null,
+				type: "mmcq",
+				options: {
+					"Prepaid shopping list for groceries": 15,
+					"Prepaid shopping list moves": 15,
+					"Prepaid shopping for food": 15,
+				},
+			},
+		],
+	});
+	await db.public.services.create({
+		name: "Pet Sitting",
+		priceType: "fixed",
+		description: "Any Description Here",
+		price: 10,
+		questions: [
+			{
+				id: 1,
+				question: "Size of Pet",
+				text: null,
+				type: "mcq",
+				options: { Medium: 0, Large: 0 },
+			},
+			{
+				id: 2,
+				question: "Type of Pet",
+				text: null,
+				type: "mcq",
+				options: { Cat: 0, Dog: 0 },
+			},
+			{ id: 3, question: "Amount", text: "Number of Pets", type: "integer", price: 5 },
+
+			{
+				id: 4,
+				question: "Options",
+				text: null,
+				type: "mmcq",
+				options: {
+					"Full : Feeding, Watching, Bathing, Walking": 30,
+					"Watching Only": 10,
+					"Walking Only": 10,
+					"Bathing Only": 10,
+					"Watching & Feeding Only": 20,
+					"Watching & Walking Only": 20,
+				},
+			},
+		],
+	});
+	await db.public.services.create({
+		name: "Moving In/Out",
+		priceType: "negotiable",
+		description: "Any Description Here",
+		price: 0,
+		questions: [
+			{
+				id: 1,
+				question: "Options",
+				text: null,
+				type: "mcq",
+				options: { Small: 10, medium: 20, large: 25 },
+			},
+			{ id: 2, question: "Trip", text: "Total trimp length (Miles)", type: "integer", price: 0 },
+			{
+				id: 3,
+				question: "Options",
+				text: null,
+				type: "mmcq",
+				options: {
+					"Full service : All Furniture In": 20,
+					"Full service : All Furniture Out": 25,
 				},
 			},
 		],

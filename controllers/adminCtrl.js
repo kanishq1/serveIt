@@ -144,7 +144,7 @@ module.exports.listUsers = async function (req, res) {
 // list providers
 module.exports.listProviders = async function (req, res) {
 	try {
-		let services = await db.public.provider_service.findAll({
+		let providers = await db.public.provider_service.findAll({
 			include: [
 				{ model: db.public.services, attributes: ["id", "name"] },
 				{ model: db.public.login, attributes: ["id", "name", "community_id", "address"] },
@@ -153,7 +153,7 @@ module.exports.listProviders = async function (req, res) {
 		});
 		res.status(200).json({
 			success: true,
-			services: services,
+			providers: providers,
 		});
 	} catch (err) {
 		console.log(err);

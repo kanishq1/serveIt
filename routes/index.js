@@ -53,8 +53,12 @@ router.post("/admin/login", admin.adminLogin);
 router.post("/admin/acceptProvider", admin.acceptProvider);
 router.post("/admin/rejectProvider", admin.rejectProvider);
 router.get("/admin/services", admin.listService);
+router.get("/admin/communities", admin.listCommunities);
+router.get("/admin/requestedCommunities", admin.listRequestedCommunities);
 router.get("/admin/providers", admin.listProviders);
+router.get("/admin/users", admin.listUsers);
 router.post("/admin/addServices", admin.addService);
+router.post("/admin/acceptCommunity", admin.changeCommunityStaus);
 // // ATC and the ATC Strips
 // router.get('/atc/strips', atc.getAll);
 // router.get('/atc/progress/strip', atc.get);

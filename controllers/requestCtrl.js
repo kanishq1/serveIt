@@ -13,19 +13,21 @@ module.exports.requestService = async function (req, res) {
 			answers: req.body.answers,
 			time: req.body.time,
 			type: req.body.type,
+			price: req.body.price,
+			instructions: req.body.instructions,
 			reciver_community: reciver_community.community_id,
 			status: 0,
 		};
-		let is_repeat = await db.public.request.findOne({
-			where: { reciever_id: request_obj.reciever_id, service_id: request_obj.service_id },
-		});
-		if (is_repeat) {
-			res.status(200).json({
-				success: true,
-				message: "Request already made",
-			});
-			return;
-		}
+		// let is_repeat = await db.public.request.findOne({
+		// 	where: { reciever_id: request_obj.reciever_id, service_id: request_obj.service_id },
+		// });
+		// if (is_repeat) {
+		// 	res.status(200).json({
+		// 		success: true,
+		// 		message: "Request already made",
+		// 	});
+		// 	return;
+		// }
 		let request = await db.public.request.create(request_obj);
 
 		res.status(200).json({
