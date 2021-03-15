@@ -41,6 +41,7 @@ async function public_force(testing) {
 		priceType: "fixed",
 		chargesText: "You will be charged. Serve-It will charge 10% as maintenance fee.",
 		description: "Any Description Here",
+		certificateRequired: true,
 		price: 10,
 		questions: [
 			{ id: 1, question: "Amount", text: "Number of children", type: "integer", price: 5 },
@@ -69,7 +70,7 @@ async function public_force(testing) {
 		name: "Care Giving",
 		priceType: "fixed",
 		chargesText: "You will be charged. Serve-It will charge 10% as maintenance fee.",
-		description: "Any Description Here",
+		certificateRequired: true,
 		price: 10,
 		questions: [
 			// { id: 1, question: "Amount", text: "Number of children", type: "integer", price: 5 },
@@ -102,7 +103,7 @@ async function public_force(testing) {
 		priceType: "negotiable",
 		chargesText:
 			"All prices are set by hair dresser. This is a negotiable service. Negotiate with provider over chat, and make payment there, Serve it, deducts 10% transaction fee.",
-		description: "Any Description Here",
+		certificateRequired: true,
 		price: 0,
 		questions: [
 			// { id: 1, question: "Amount", text: "Number of children", type: "integer", price: 5 },
@@ -142,7 +143,7 @@ async function public_force(testing) {
 	await db.public.services.create({
 		name: "Car wash",
 		priceType: "fixed",
-		description: "Any Description Here",
+		certificateRequired: true,
 		price: 10,
 		questions: [
 			// { id: 1, question: "Amount", text: "Number of children", type: "integer", price: 5 },
@@ -170,7 +171,7 @@ async function public_force(testing) {
 		name: "Handyman",
 		priceType: "fixed",
 		chargesText: "You will be charged. Serve-It will charge 10% as maintenance fee.",
-		description: "Any Description Here",
+		certificateRequired: true,
 		price: 10,
 		questions: [
 			{
@@ -195,7 +196,7 @@ async function public_force(testing) {
 		name: "House Keeping",
 		priceType: "fixed",
 		chargesText: "You will be charged. Serve-It will charge 10% as maintenance fee.",
-		description: "Any Description Here",
+		certificateRequired: true,
 		price: 10,
 		questions: [
 			// { id: 1, question: "Amount", text: "Number of children", type: "integer", price: 5 },
@@ -240,7 +241,7 @@ async function public_force(testing) {
 		priceType: "negotiable",
 		chargesText:
 			"All prices are set by cook. This is a negotiable service. Negotiate with provider over chat, and make payment there, Serve it, deducts 10% transaction fee.",
-		description: "Any Description Here",
+		certificateRequired: true,
 		price: 0,
 		questions: [
 			// { id: 1, question: "Amount", text: "Number of children", type: "integer", price: 5 },
@@ -273,7 +274,7 @@ async function public_force(testing) {
 		name: "Shopping",
 		priceType: "fixed",
 		chargesText: "You will be charged. Serve-It will charge 10% as maintenance fee.",
-		description: "Any Description Here",
+		certificateRequired: true,
 		price: 10,
 		questions: [
 			{
@@ -293,7 +294,7 @@ async function public_force(testing) {
 		name: "Pet Sitting",
 		priceType: "fixed",
 		chargesText: "You will be charged. Serve-It will charge 10% as maintenance fee.",
-		description: "Any Description Here",
+		certificateRequired: true,
 		price: 10,
 		questions: [
 			{
@@ -332,7 +333,7 @@ async function public_force(testing) {
 		name: "Moving In/Out",
 		priceType: "fixed",
 		chargesText: "You will be charged. Serve-It will charge 10% as maintenance fee.",
-		description: "Any Description Here",
+		certificateRequired: true,
 		price: 0,
 		questions: [
 			{

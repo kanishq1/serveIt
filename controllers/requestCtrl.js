@@ -15,6 +15,7 @@ module.exports.requestService = async function (req, res) {
 			type: req.body.type,
 			price: req.body.price,
 			instructions: req.body.instructions,
+			certificateRequired: req.body.certificateRequired,
 			reciver_community: reciver_community.community_id,
 			status: 0,
 		};
