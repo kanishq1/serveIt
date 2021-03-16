@@ -5,11 +5,14 @@ module.exports.applyService = async function (req, res) {
 		// let user = await db.public.login.findOne({ where: { firebase_id: id } });
 		let service = req.body.service_id;
 		let docs = req.body.docs;
+		if (!id) throw Error("User not found, login again!");
+		if (!service) throw Error("Please enter service id");
+
 		const existingUser = await db.public.provider_service.findOne({
 			where: { login_id: id, service_id: service },
 		});
 		if (existingUser) throw Error("User already applied for this service");
-		const provider = await db.public.provider_service.create({ login_id: id, service_id: service, status: 0 });
+		const provider = await db.public.provider_service.create({ login_id: id, service_id: service, status: 1 });
 		res.status(200).json({
 			success: true,
 			provider: provider,
@@ -58,8 +61,8 @@ module.exports.getAllServicesProvider = async function (req, res) {
 		let id = req.user.login_id;
 		let services = await db.public.provider_service.findAll({
 			where: { login_id: id },
-			include: [{ model: db.public.services }],
-			attributes: ["id", "service_id", "docs", "status"],
+			include: [{ model: db.public.services, attributes: ["id", "name", "certificateRequired"] }],
+			attributes: ["service_id", "docs", "status"],
 		});
 		if (!services) throw Error("Not found");
 		res.status(200).json({

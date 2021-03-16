@@ -36,7 +36,7 @@ module.exports.addService = async function (req, res) {
 };
 module.exports.getAllServices = async function (req, res) {
 	try {
-		let services = await db.public.services.findAll({ attributes: ["id", "name"] });
+		let services = await db.public.services.findAll({ attributes: ["id", "name", "certificateRequired"] });
 		if (!services) throw Error("No services found");
 		res.status(200).json({
 			success: true,
