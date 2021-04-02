@@ -323,7 +323,7 @@ module.exports.servicesAvailabeNow = async function (req, res) {
 
 		let available = await db.public.request.findAll({
 			include: [
-				{ model: db.public.login, as: "reciever", attributes: ["id", "name", "profile_pic"] },
+				{ model: db.public.login, as: "reciever", attributes: ["id", "name", "profile_pic", "address"] },
 				{ model: db.public.services, attributes: ["id", "name", "description", "questions"] },
 			],
 			where: { reciver_community: provider_community.community_id, provider_id: null },
