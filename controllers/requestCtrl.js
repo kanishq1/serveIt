@@ -8,7 +8,6 @@ module.exports.requestService = async function (req, res) {
 		let reciver_community = await db.public.user_community.findOne({ where: { login_id: req.user.login_id } });
 		if (!reciver_community) throw Error("Reciever community not found");
 		if (!req.body.service_id) throw Error("Please enter service id");
-		if (!req.body.price) throw Error("Please enter price");
 		if (!req.body.answers) throw Error("Please enter answers");
 		if (!req.body.type) throw Error("Please enter type");
 		let request_obj = {
@@ -324,7 +323,7 @@ module.exports.servicesAvailabeNow = async function (req, res) {
 		let available = await db.public.request.findAll({
 			include: [
 				{ model: db.public.login, as: "reciever", attributes: ["id", "name", "profile_pic", "address"] },
-				{ model: db.public.services, attributes: ["id", "name", "description", "questions"] },
+				{ model: db.public.services, attributes: ["id", "name", "description", "questions", "priceType"] },
 			],
 			where: { reciver_community: provider_community.community_id, provider_id: null },
 			attributes: [

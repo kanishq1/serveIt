@@ -56,7 +56,7 @@ async function public_force(testing) {
 				id: 3,
 				question: "Options",
 				text: null,
-				type: "mmcq",
+				type: "mcq",
 				options: {
 					"Full : Feeding Bathing Watching": 20,
 					"Watching Only": 10,
@@ -85,7 +85,7 @@ async function public_force(testing) {
 				id: 2,
 				question: "Options",
 				text: null,
-				type: "mmcq",
+				type: "mcq",
 				options: {
 					"Full : Feeding, Bathing, Watching": 20,
 					"Watching Only": 10,
@@ -118,7 +118,7 @@ async function public_force(testing) {
 				id: 2,
 				question: "Hairdresser",
 				text: null,
-				type: "mmcq",
+				type: "mcq",
 				options: {
 					"Full styling": 0,
 					"Process Washing": 0,
@@ -131,7 +131,7 @@ async function public_force(testing) {
 				id: 3,
 				question: "Barber",
 				text: null,
-				type: "mmcq",
+				type: "mcq",
 				options: {
 					"Full styling": 0,
 					"Haircut Only": 0,
@@ -158,7 +158,7 @@ async function public_force(testing) {
 				id: 2,
 				question: "Options",
 				text: null,
-				type: "mmcq",
+				type: "mcq",
 				options: {
 					"Full Service : Wash/Vacuum ": 20,
 					"Wash outside only": 15,
@@ -178,7 +178,7 @@ async function public_force(testing) {
 				id: 1,
 				question: "Options",
 				text: null,
-				type: "mmcq",
+				type: "mcq",
 				options: {
 					"Fix Toilet": 20,
 					"Change Bulb": 10,
@@ -211,7 +211,7 @@ async function public_force(testing) {
 				id: 2,
 				question: "Options",
 				text: null,
-				type: "mmcq",
+				type: "mcq",
 				options: {
 					"Full Service : All rooms": 20,
 					"Bedrooms and Bathrooms only": 15,
@@ -227,7 +227,7 @@ async function public_force(testing) {
 				id: 3,
 				question: "Laundry",
 				text: null,
-				type: "mmcq",
+				type: "mcq",
 				options: {
 					"Full Service : Washing, Drying": 10,
 					"Folding, Ironing": 10,
@@ -249,7 +249,7 @@ async function public_force(testing) {
 				id: 1,
 				question: "Options",
 				text: null,
-				type: "mmcq",
+				type: "mcq",
 				options: { "Cooking what is available": 0, "Pre Cooked": 0, Vegan: 0 },
 			},
 			{ id: 2, question: "Size", text: "Meals", type: "integer", price: 0 },
@@ -257,7 +257,7 @@ async function public_force(testing) {
 				id: 3,
 				question: "Style",
 				text: null,
-				type: "mmcq",
+				type: "mcq",
 				options: {
 					American: 0,
 					Asian: 0,
@@ -281,7 +281,7 @@ async function public_force(testing) {
 				id: 1,
 				question: "Options",
 				text: null,
-				type: "mmcq",
+				type: "mcq",
 				options: {
 					"Prepaid shopping list for groceries": 15,
 					"Prepaid shopping list moves": 15,
@@ -302,7 +302,7 @@ async function public_force(testing) {
 				question: "Size of Pet",
 				text: null,
 				type: "mcq",
-				options: { Medium: 0, Large: 0 },
+				options: { Medium: 5, Large: 10 },
 			},
 			{
 				id: 2,
@@ -317,7 +317,7 @@ async function public_force(testing) {
 				id: 4,
 				question: "Options",
 				text: null,
-				type: "mmcq",
+				type: "mcq",
 				options: {
 					"Full : Feeding, Watching, Bathing, Walking": 30,
 					"Watching Only": 10,
@@ -348,7 +348,7 @@ async function public_force(testing) {
 				id: 3,
 				question: "Options",
 				text: null,
-				type: "mmcq",
+				type: "mcq",
 				options: {
 					"Full service : All Furniture In": 20,
 					"Full service : All Furniture Out": 25,
