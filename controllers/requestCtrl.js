@@ -333,6 +333,7 @@ module.exports.servicesAvailabeNow = async function (req, res) {
 				"price",
 				"type",
 				"status",
+				"instructions",
 				"time",
 				"reciever_id",
 				"reciver_community",
