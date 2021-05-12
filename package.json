@@ -31,7 +31,7 @@
 		"morgan": "^1.9.1",
 		"node-cron": "^2.0.3",
 		"node-fetch": "^2.6.0",
-		"nodemailer": "^6.4.6",
+		"nodemailer": "^6.4.16",
 		"nodemon": "^2.0.4",
 		"nonce-generator": "^1.0.2",
 		"nunjucks": "^3.2.1",
