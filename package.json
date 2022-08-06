@@ -35,7 +35,7 @@
 		"nodemon": "^2.0.4",
 		"nonce-generator": "^1.0.2",
 		"nunjucks": "^3.2.1",
-		"otp-generator": "^1.1.0",
+		"otp-generator": "^3.0.0",
 		"otp-without-db": "^1.0.4",
 		"passport": "^0.4.1",
 		"passport-google-oauth": "^2.0.0",
